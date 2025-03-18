@@ -12,7 +12,7 @@ const db = mysql.createConnection({
     host: process.env.DB_HOST, 
     user: process.env.DB_USER,  
     password: process.env.DB_PASSWORD, 
-    database: process.env.DB_NAME,
+    database: "gastos_app",
     port: process.env.DB_PORT || 3306
 });
 
@@ -23,66 +23,7 @@ db.connect(err => {
         return;
     }
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
-
-        // Usar la base de datos
-        db.changeUser({ database: 'gastos_app' }, err => {
-            if (err) {
-                console.error("❌ Error al seleccionar la base de datos:", err);
-                return;
-            }
-            console.log("✅ Base de datos seleccionada");
-        });
-            const queries = [
-                `CREATE TABLE IF NOT EXISTS Usuarios (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    nombre_usuario VARCHAR(50) UNIQUE NOT NULL,
-                    contrasena TEXT NOT NULL
-                );`,
-                
-                `CREATE TABLE IF NOT EXISTS Grupos (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    nombre_grupo VARCHAR(100) NOT NULL,
-                    cant_integrantes INT DEFAULT 1,
-                    id_admin INT,
-                    FOREIGN KEY (id_admin) REFERENCES Usuarios(id) ON DELETE CASCADE
-                );`,
-            
-                `CREATE TABLE IF NOT EXISTS Usuarios_Grupos (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    id_usuario INT,
-                    id_grupo INT,
-                    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) ON DELETE CASCADE,
-                    FOREIGN KEY (id_grupo) REFERENCES Grupos(id) ON DELETE CASCADE,
-                    UNIQUE(id_usuario, id_grupo)
-                );`,
-            
-                `CREATE TABLE IF NOT EXISTS Gastos (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    id_grupo INT,
-                    id_usuario INT,
-                    motivo_gasto TEXT NOT NULL,
-                    plata DECIMAL(10,2) NOT NULL,
-                    pago BOOLEAN DEFAULT FALSE,
-                    FOREIGN KEY (id_grupo) REFERENCES Grupos(id) ON DELETE CASCADE,
-                    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) ON DELETE CASCADE
-                );`
-            ];
-            
-            // Ejecutar cada consulta individualmente
-            queries.forEach(query => {
-                db.query(query, (err, results) => {
-                    if (err) {
-                        console.error("❌ Error al ejecutar consulta:", err.message);
-                    } else {
-                        console.log("✅ Tabla creada o ya existente");
-                    }
-                });
-            });
-            
-            // Cerrar conexión después de ejecutar todo
-            db.end();
-        });
-
+    });
 
 
 // 📌 Ruta para login
