@@ -31,7 +31,7 @@ db.connect(err => {
                 return;
             }
             console.log("✅ Base de datos seleccionada");
-
+        });
             const queries = [
                 `CREATE TABLE IF NOT EXISTS Usuarios (
                     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -82,7 +82,6 @@ db.connect(err => {
             // Cerrar conexión después de ejecutar todo
             connection.end();
         });
-    });
 
 
 
