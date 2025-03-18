@@ -24,13 +24,6 @@ db.connect(err => {
     }
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
-    db.query("CREATE DATABASE IF NOT EXISTS gastos_app", (err, result) => {
-        if (err) {
-            console.error("❌ Error al crear la base de datos:", err);
-            return;
-        }
-        console.log("✅ Base de datos creada o ya existente");
-
         // Usar la base de datos
         db.changeUser({ database: 'gastos_app' }, err => {
             if (err) {
@@ -45,7 +38,7 @@ db.connect(err => {
                 CREATE TABLE IF NOT EXISTS Usuarios (
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     nombre_usuario VARCHAR(50) UNIQUE NOT NULL,
-                    contraseña TEXT NOT NULL
+                    contrasena TEXT NOT NULL
                 );
 
                 -- Tabla de Grupos
@@ -80,6 +73,7 @@ db.connect(err => {
                 );
             `;
 
+
             // Ejecutar la consulta
             db.query(sql, (err, result) => {
                 if (err) {
@@ -91,7 +85,7 @@ db.connect(err => {
             });
         });
     });
-});
+
 
 
 // 📌 Ruta para login
