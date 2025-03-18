@@ -31,7 +31,7 @@ app.post("/login", (req, res) => {
     const { nombre, contraseña } = req.body;
     console.log("Login: Nombre: ", nombre, "Contraseña: ", contraseña);
 
-    const checkQuery = "SELECT nombre_usuario, contraseña FROM usuarios WHERE nombre_usuario=? AND contraseña=?";
+    const checkQuery = "SELECT nombre_usuario, contrasena FROM Usuarios WHERE nombre_usuario=? AND contraseña=?";
     db.query(checkQuery, [nombre, contraseña], (err, results) => {
         if (err) {
             console.error("Error en la consulta", err);
