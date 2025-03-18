@@ -23,7 +23,76 @@ db.connect(err => {
         return;
     }
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
+
+    db.query("CREATE DATABASE IF NOT EXISTS gastos_app", (err, result) => {
+        if (err) {
+            console.error("❌ Error al crear la base de datos:", err);
+            return;
+        }
+        console.log("✅ Base de datos creada o ya existente");
+
+        // Usar la base de datos
+        db.changeUser({ database: 'gastos_app' }, err => {
+            if (err) {
+                console.error("❌ Error al seleccionar la base de datos:", err);
+                return;
+            }
+            console.log("✅ Base de datos seleccionada");
+
+            // Definir la consulta para las tablas
+            const sql = `
+                -- Tabla de Usuarios
+                CREATE TABLE IF NOT EXISTS Usuarios (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    nombre_usuario VARCHAR(50) UNIQUE NOT NULL,
+                    contraseña TEXT NOT NULL
+                );
+
+                -- Tabla de Grupos
+                CREATE TABLE IF NOT EXISTS Grupos (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    nombre_grupo VARCHAR(100) NOT NULL,
+                    cant_integrantes INT DEFAULT 1,
+                    id_admin INT,
+                    FOREIGN KEY (id_admin) REFERENCES Usuarios(id) ON DELETE CASCADE
+                );
+
+                -- Tabla intermedia para usuarios en grupos
+                CREATE TABLE IF NOT EXISTS Usuarios_Grupos (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    id_usuario INT,
+                    id_grupo INT,
+                    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) ON DELETE CASCADE,
+                    FOREIGN KEY (id_grupo) REFERENCES Grupos(id) ON DELETE CASCADE,
+                    UNIQUE(id_usuario, id_grupo)
+                );
+
+                -- Tabla de Gastos
+                CREATE TABLE IF NOT EXISTS Gastos (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    id_grupo INT,
+                    id_usuario INT,
+                    motivo_gasto TEXT NOT NULL,
+                    plata DECIMAL(10,2) NOT NULL,
+                    pago BOOLEAN DEFAULT FALSE,
+                    FOREIGN KEY (id_grupo) REFERENCES Grupos(id) ON DELETE CASCADE,
+                    FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) ON DELETE CASCADE
+                );
+            `;
+
+            // Ejecutar la consulta
+            db.query(sql, (err, result) => {
+                if (err) {
+                    console.error("❌ Error al crear las tablas:", err);
+                } else {
+                    console.log("✅ Tablas creadas correctamente");
+                }
+                db.end(); // Cerrar la conexión
+            });
+        });
+    });
 });
+
 
 // 📌 Ruta para login
 app.post("/login", (req, res) => {
