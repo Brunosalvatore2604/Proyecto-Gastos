@@ -70,7 +70,7 @@ db.connect(err => {
             
             // Ejecutar cada consulta individualmente
             queries.forEach(query => {
-                connection.query(query, (err, results) => {
+                db.query(query, (err, results) => {
                     if (err) {
                         console.error("❌ Error al ejecutar consulta:", err.message);
                     } else {
@@ -80,7 +80,7 @@ db.connect(err => {
             });
             
             // Cerrar conexión después de ejecutar todo
-            connection.end();
+            db.end();
         });
 
 
