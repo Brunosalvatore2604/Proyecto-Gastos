@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const mysql = require("mysql2");
+const jwt = require("jsonwebtoken");
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../public"))); // Asegura que los archivos estáticos sean accesibles
@@ -38,8 +39,26 @@ app.post("/login", (req, res) => {
         if (results.length == 0) {
             return res.status(400).json({ mensaje: "Contraseña o Usuario Incorrecto" });
         }
-        return res.status(200).json({ nombre: `${nombre}` });
+        const token = jwt.sign({nombre},"124911",{expiresIn:"1h"});
+        return res.status(200).json({token});
     });
+});
+
+const verificarToken = (req,res,next)=>{
+
+    const token = req.headers["authorization"]?.split(" ")[1];
+
+    if(!token) return res.status(401).json({mensaje:"Token invalido"});
+
+    jwt.verify(token,"124911",(err,debug)=>{
+        if(err) return res.status(401).json({mensaje:"Token invalido"});
+        req.usuario = decoded;
+        next();
+    });
+}
+
+app.get("/main",verificarToken(),(req,res)=>{
+    res.json({mensjae:`Bienvenido ${req.usuario.nombre}`});
 });
 
 // 📌 Ruta para register

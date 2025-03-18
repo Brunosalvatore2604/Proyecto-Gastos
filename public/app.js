@@ -14,20 +14,21 @@ document.getElementById("form-login").addEventListener("submit", async (e) => {
     };
 
     try {
-        const respuesta = await fetch("http://localhost:3000/login", {
+        const respuesta = await fetch("/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(values)
-        });
+        })
+        .then(res => res.json())
+        .then(data =>{
+            if(data.token){
+                localStorage.setItem("token",data.token);
+                window.location.href = "/main/index.html";
+            }else{
+                alert(data.mensaje);
+            }
+        })
 
-        const data = await respuesta.json();
-        console.log("Respuesta del servidor: ",data);
-
-        if(respuesta.ok){
-            alert(`Bienvenido: ${data.nombre}`);
-        }else{
-            alert(data.mensaje);
-        }
 
     } catch (error) {
         console.error("Error en fetch:", error);
