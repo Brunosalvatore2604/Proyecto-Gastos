@@ -1,5 +1,3 @@
-const { json } = require("express");
-const { decode } = require("jsonwebtoken");
 
 document.addEventListener("DOMContentLoaded",()=>{
     
@@ -32,7 +30,7 @@ document.getElementById("form-group-creation").addEventListener("submit", async 
 
     if(!token){
         console.error("No hay token redirigiendo...");
-        window.location.href = "/index.html";
+        window.location.href = "/";
         return;
     }    
     try{
