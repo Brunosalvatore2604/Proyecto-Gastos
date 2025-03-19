@@ -31,7 +31,7 @@ app.post("/login", (req, res) => {
     const { nombre, contraseña } = req.body;
     console.log("Login: Nombre: ", nombre, "Contraseña: ", contraseña);
 
-    const checkQuery = "SELECT nombre_usuario, contrasena FROM Usuarios WHERE nombre_usuario=? AND contraseña=?";
+    const checkQuery = "SELECT nombre_usuario, contrasena FROM Usuarios WHERE nombre_usuario=? AND contrasena=?";
     db.query(checkQuery, [nombre, contraseña], (err, results) => {
         if (err) {
             console.error("Error en la consulta", err);
@@ -77,7 +77,7 @@ app.post("/register", (req, res) => {
             return res.status(400).json({ mensaje: "El nombre de usuario ya está en uso" });
         }
 
-        const insertQuery = "INSERT INTO Usuarios (nombre_usuario, contraseña) VALUES (?, ?)";
+        const insertQuery = "INSERT INTO Usuarios (nombre_usuario, contrasena) VALUES (?, ?)";
         db.query(insertQuery, [nombre, contraseña], (err, result) => {
             if (err) {
                 console.error("Error al registrar usuario:", err);
