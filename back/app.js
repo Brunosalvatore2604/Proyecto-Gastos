@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express"); //alt 96 ``
 const app = express();
 const path = require("path");
 const mysql = require("mysql2");
@@ -31,7 +31,7 @@ app.post("/login", (req, res) => {
     const { nombre, contraseña } = req.body;
     console.log("Login: Nombre: ", nombre, "Contraseña: ", contraseña);
 
-    const checkQuery = "SELECT nombre_usuario, contrasena FROM Usuarios WHERE nombre_usuario=? AND contrasena=?";
+    const checkQuery = "SELECT nombre_usuario, contrasena,id FROM Usuarios WHERE nombre_usuario=? AND contrasena=?";
     db.query(checkQuery, [nombre, contraseña], (err, results) => {
         if (err) {
             console.error("Error en la consulta", err);
@@ -40,18 +40,20 @@ app.post("/login", (req, res) => {
         if (results.length == 0) {
             return res.status(400).json({ mensaje: "Contraseña o Usuario Incorrecto" });
         }
-        const token = jwt.sign({nombre},"124911",{expiresIn:"1h"});
+        const id = results[0].id;
+        const token = jwt.sign({nombre,id},"124911",{expiresIn:"1h"});
         return res.status(200).json({token});
     });
 });
 
+//verificar token
 const verificarToken = (req,res,next)=>{
 
     const token = req.headers["authorization"]?.split(" ")[1];
 
     if(!token) return res.status(401).json({mensaje:"Token invalido"});
 
-    jwt.verify(token,"124911",(err,debug)=>{
+    jwt.verify(token,"124911",(err,decoded)=>{
         if(err) return res.status(401).json({mensaje:"Token invalido"});
         req.usuario = decoded;
         next();
@@ -59,13 +61,16 @@ const verificarToken = (req,res,next)=>{
 }
 
 app.get("/main",verificarToken,(req,res)=>{
-    res.json({mensjae:`Bienvenido ${req.usuario.nombre}`});
+    res.json({mensaje:req.usuario.nombre});
 });
 
 // 📌 Ruta para register
 app.post("/register", (req, res) => {
     const { nombre, contraseña } = req.body;
 
+    if (!nombre || !contraseña) {
+        return res.status(400).json({ mensaje: "Faltan datos: nombre o contraseña" });
+    }
     const checkQuery = "SELECT * FROM Usuarios WHERE nombre_usuario = ?";
     db.query(checkQuery, [nombre], (err, results) => {
         if (err) {
@@ -88,6 +93,32 @@ app.post("/register", (req, res) => {
     });
 });
 
+// 📌 Ruta para crear grupo
+app.post("/crearGrupo",(req,res)=>{
+    const {nombreGrupo,idCreador} = req.body;
+
+    if (!nombreGrupo || !idCreador) {
+        return res.status(400).json({ mensaje: "Faltan datos: nombreGrupo o idCreador" });
+    }
+    const checkquerry = `SELECT * FROM grupos WHERE nombre_grupo = ?`;
+    db.query(checkquerry,[nombreGrupo],(err,results)=>{
+        if(err){
+            console.error("Error Creando Grupo",err);
+            return res.status(500).json({mensaje:`Error ${err}`});
+        }
+        if(results.length>0){
+            return res.status(409).json({mensaje:"Ya existe un grupo con ese nombre"});
+        }
+        const querry = `INSERT INTO grupos (nombre_grupo, id_admin) VALUES (?, ?)`;
+        db.query(querry,[nombreGrupo, idCreador],(err,results)=>{
+            if(err) {
+                console.error("Error Creando Grupo",err);
+                return res.status(500).json({mensaje:`Error: ${err}`});
+            }
+            return res.status(201).json({mensaje:"Grupo creado exitosamente"});
+        });
+    });
+});
 // 📌 Ajustar el puerto para que use el de Railway
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
