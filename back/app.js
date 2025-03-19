@@ -100,7 +100,7 @@ app.post("/crearGrupo",(req,res)=>{
     if (!nombreGrupo || !idCreador) {
         return res.status(400).json({ mensaje: "Faltan datos: nombreGrupo o idCreador" });
     }
-    const checkquerry = `SELECT * FROM grupos WHERE nombre_grupo = ?`;
+    const checkquerry = `SELECT * FROM Grupos WHERE nombre_grupo = ?`;
     db.query(checkquerry,[nombreGrupo],(err,results)=>{
         if(err){
             console.error("Error Creando Grupo",err);
@@ -109,7 +109,7 @@ app.post("/crearGrupo",(req,res)=>{
         if(results.length>0){
             return res.status(409).json({mensaje:"Ya existe un grupo con ese nombre"});
         }
-        const querry = `INSERT INTO grupos (nombre_grupo, id_admin) VALUES (?, ?)`;
+        const querry = `INSERT INTO Grupos (nombre_grupo, id_admin) VALUES (?, ?)`;
         db.query(querry,[nombreGrupo, idCreador],(err,results)=>{
             if(err) {
                 console.error("Error Creando Grupo",err);
