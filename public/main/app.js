@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const expired = payload.exp < Date.now();
     if(expired){
         window.location.href = "/index.html";
+        localStorage.removeItem("token");
         return;
     }
 
