@@ -6,6 +6,13 @@ document.addEventListener("DOMContentLoaded",()=>{
         window.location.href = "/index.html";
         return;
     }
+    const payload64 = token.split(".")[1];
+    const payload = JSON.parse(atob(payload64));
+    const expired = payload.exp < Date.now();
+    if(expired){
+        window.location.href = "/index.html";
+        return;
+    }
 
     fetch("/main",{
         method: "GET",
