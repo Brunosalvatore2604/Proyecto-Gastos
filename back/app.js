@@ -132,7 +132,10 @@ app.get("/main-getGrupos",(req,res)=>{
         if(err){
             return res.status(500).json({mensaje:"Error interno en consulta"});
         }
-
+        const grupos = resultado.map(row => ({
+            id: row.id,
+            nombre_grupo: row.nombre_grupo
+        }));
         return res.status(200).json({resultado});
     })
 });
