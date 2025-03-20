@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     }
     const payload64 = token.split(".")[1];
     const payload = JSON.parse(atob(payload64));
-    const expired = payload.exp < Date.now();
+    const expired = (payload.exp*1000) < Date.now();
     if(expired){
         window.location.href = "/index.html";
         localStorage.removeItem("token");
