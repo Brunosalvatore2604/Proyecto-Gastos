@@ -61,7 +61,7 @@ const verificarToken = (req,res,next)=>{
 }
 
 app.get("/main",verificarToken,(req,res)=>{
-    res.json({mensaje:req.usuario.nombre,id:req.usuario.id});
+    res.status(200).json({mensaje:req.usuario.nombre,id:req.usuario.id});
 });
 
 // 📌 Ruta para register

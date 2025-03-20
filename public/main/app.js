@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
             headers: {"Authorization" : "Bearer "+token}
         }).then(res =>res.json())
         .then(data =>{
-            if(data.mensaje){
+            if(res.ok){
                 document.getElementById("nombre-usuario").textContent = `Nombre de usuario: ${data.mensaje.nombre}`;
                 document.getElementById("id-usuario").textContent = `ID: ${data.mensaje.id}`;
             }else{
