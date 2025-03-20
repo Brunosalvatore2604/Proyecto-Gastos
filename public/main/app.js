@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
             const groupSelector = document.getElementsByClassName("group-selector");
             groupSelector.innerHTML = "";
             
-            data.forEach(grupo => {
+            data.array.forEach(grupo =>{
 
                 const grupoeje = document.createElement("div");
                 grupoeje.classList.add("group-eje");
