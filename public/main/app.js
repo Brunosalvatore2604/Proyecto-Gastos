@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", async()=> {
         }).then(res =>res.json())
         .then(data =>{
             if(res.ok){
-                document.getElementById("nombre-usuario").textContent = `Nombre de usuario: ${data.mensaje.nombre}`;
-                document.getElementById("id-usuario").textContent = `ID: ${data.mensaje.id}`;
+                document.getElementById("nombre-usuario").textContent = `Nombre de usuario: ${data.mensaje}`;
+                document.getElementById("id-usuario").textContent = `ID: ${data.id}`;
             }else{
                 window.location.href("/index.html");
             }
