@@ -61,7 +61,7 @@ const verificarToken = (req,res,next)=>{
 }
 
 app.get("/main",verificarToken,(req,res)=>{
-    res.json({mensaje:req.usuario.nombre});
+    res.json({mensaje:req.usuario.nombre,id:req.usuario.id});
 });
 
 // 📌 Ruta para register
@@ -119,6 +119,23 @@ app.post("/crearGrupo",(req,res)=>{
         });
     });
 });
+
+// 📌 Ruta para get grupos por usuario
+app.get("/main-getGrupos",(req,res)=>{
+    const token = req.headers["authorization"]?.split(" ")[1];
+    const payload64 = token.split(".")[1];
+    const payload = JSON.parse(atob(payload64));
+    const id = payload.id;
+
+    const querry = `SELECT nombre_grupo,id FROM Grupos WHERE id_admin = ?`;
+    db.query(querry,[id],(err,resultado)=>{
+        if(err){
+            return res.status(500).json({mensaje:"Error interno en consulta"});
+        }
+        return res.status(200).json({resultado});
+    })
+});
+
 // 📌 Ajustar el puerto para que use el de Railway
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -1,5 +1,5 @@
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", async()=> {
     
     const token = localStorage.getItem("token");
     if(!token) {
@@ -15,19 +15,62 @@ document.addEventListener("DOMContentLoaded",()=>{
         return;
     }
 
-    fetch("/main",{
-        method: "GET",
-        headers: {"Authorization" : "Bearer "+token}
-    }).then(res =>res.json())
-    .then(data =>{
-        if(data.mensaje){
-            document.getElementById("nombre-usuario").innerHTML = `<h3 id="nombre-usuario">Nombre de usuario: ${data.mensaje}</h3>`;
-        }else{
-            window.location.href("/index.html");
-        }
-    }).catch(err=>{
-        console.error("Error:",err);
-    })
+    try{
+        await fetch("/main",{
+            method: "GET",
+            headers: {"Authorization" : "Bearer "+token}
+        }).then(res =>res.json())
+        .then(data =>{
+            if(data.mensaje){
+                document.getElementById("nombre-usuario").textContent = `Nombre de usuario: ${data.mensaje.nombre}`;
+                document.getElementById("id-usuario").textContent = `ID: ${data.mensaje.id}`;
+            }else{
+                window.location.href("/index.html");
+            }
+        }).catch(err=>{
+            console.error("Error:",err);
+        })
+    }catch(err){
+        console.err("Error",err);
+    }
+    
+    try{
+        await fetch("/main-getGrupos",{
+            method:"GET",
+            headers: {"Authorization": " Bearer "+token}
+        })
+        .then(res =>res.json())
+        .then(data =>{
+            if(data.mensaje){
+                console.error("Error cargando los grupos: ",data.mensaje);
+            }
+            const groupSelector = document.getElementsByClassName("group-selector");
+            groupSelector.innerHTML = "";
+            
+            data.forEach(grupo => {
+
+                const grupoeje = document.createElement("div");
+                grupoeje.classList.add("group-eje");
+
+                const nombre = document.createElement("h3");
+                nombre.textContent = `Nombre: ${grupo.nombre_grupo}`;
+                grupoeje.appendChild(nombre);
+
+                const integrantes = document.createElement("h3");
+                integrantes.textContent = `adminID: ${grupo.id}`;
+                grupoeje.appendChild(integrantes);
+
+                const agregarIntegrantes = document.createElement("button");
+                agregarIntegrantes.textContent = "Agregar Integrante";
+                grupoeje.appendChild(agregarIntegrantes);
+
+                groupSelector.appendChild(grupoeje);
+            });
+        })
+    }catch(err){
+        console.error("Error: ",err);
+    }
+
 });
 
 document.getElementById("form-group-creation").addEventListener("submit", async (e)=>{
