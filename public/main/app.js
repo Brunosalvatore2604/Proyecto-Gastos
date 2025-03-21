@@ -19,7 +19,14 @@ document.addEventListener("DOMContentLoaded", async()=> {
         await fetch("/main",{
             method: "GET",
             headers: {"Authorization" : "Bearer "+token}
-        }).then(res =>res.json())
+        }).then(res => {
+            console.log("Response headers:", res.headers.get("content-type")); // Ver qué tipo de respuesta devuelve
+            return res.text();  // Cambiar a .text() para ver la respuesta real
+        })
+        .then(text => {
+            console.log("Response text:", text); // Ver si es HTML o JSON
+            return JSON.parse(text); // Intentar parsear manualmente
+        })
         .then(data =>{
             if(data.mensaje){
                 console.log(data);
