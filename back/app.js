@@ -11,7 +11,7 @@ const verificarToken = (req,res,next)=>{
 
     const token = req.headers["Authorization"]?.split(" ")[1];
 
-    if(!token) return res.status(401).json({mensaje:"Token invalido 1"});
+    if(!token) {return res.status(401).json({mensaje:"Token invalido 1"});}
 
     jwt.verify(token,"124911",(err,decoded)=>{
         if(err) return res.status(401).json({mensaje:"Token invalido 2"});
