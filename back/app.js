@@ -5,6 +5,26 @@ const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
 
 app.use(express.json());
+
+//verificar token
+const verificarToken = (req,res,next)=>{
+
+    const token = req.headers["Authorization"]?.split(" ")[1];
+
+    if(!token) return res.status(401).json({mensaje:"Token invalido"});
+
+    jwt.verify(token,"124911",(err,decoded)=>{
+        if(err) return res.status(401).json({mensaje:"Token invalido"});
+        req.usuario = decoded;
+        next();
+    });
+}
+
+app.get("/main",verificarToken,(req,res)=>{
+    console.log("llegamos al main xd");
+    res.status(200).json({mensaje:req.usuario.nombre,id:req.usuario.id});
+});
+
 app.use(express.static(path.join(__dirname, "../public"))); // Asegura que los archivos estáticos sean accesibles
 
 // 📌 Configuración de la base de datos usando variables de entorno de Railway
@@ -45,20 +65,6 @@ app.post("/login", (req, res) => {
         return res.status(200).json({token});
     });
 });
-
-//verificar token
-const verificarToken = (req,res,next)=>{
-
-    const token = req.headers["Authorization"]?.split(" ")[1];
-
-    if(!token) return res.status(401).json({mensaje:"Token invalido"});
-
-    jwt.verify(token,"124911",(err,decoded)=>{
-        if(err) return res.status(401).json({mensaje:"Token invalido"});
-        req.usuario = decoded;
-        next();
-    });
-}
 
 app.get("/main",verificarToken,(req,res)=>{
     console.log("llegamos al main xd");
