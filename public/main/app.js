@@ -61,16 +61,16 @@ document.addEventListener("DOMContentLoaded", async()=> {
                 grupoeje.appendChild(integrantes);
 
                 const formularioIntegrante = document.createElement("form");
-                formularioIntegrante.id.add("form-integrante");
+                formularioIntegrante.id = "form-integrante";
 
                 const inputNuevointegrante = document.createElement("input");
-                inputNuevointegrante.id.add("agregar-integrante");
+                inputNuevointegrante.id = "agregar-integrante";
                 formularioIntegrante.appendChild(inputNuevointegrante);
 
                 const agregarIntegrantes = document.createElement("button");
                 agregarIntegrantes.textContent = "Agregar Integrante";
-                agregarIntegrantes.id.add("submit-integrante");
-                agregarIntegrantes.type.add("submit");
+                agregarIntegrantes.id = "submit-integrante";
+                agregarIntegrantes.type = "submit";
                 formularioIntegrante.appendChild(agregarIntegrantes);
 
                 grupoeje.appendChild(formularioIntegrante);
