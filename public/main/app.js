@@ -60,10 +60,21 @@ document.addEventListener("DOMContentLoaded", async()=> {
                 integrantes.textContent = `adminID: ${grupo.id}`;
                 grupoeje.appendChild(integrantes);
 
+                const formularioIntegrante = document.createElement("form");
+                formularioIntegrante.id.add("form-integrante");
+
+                const inputNuevointegrante = document.createElement("input");
+                inputNuevointegrante.id.add("agregar-integrante");
+                formularioIntegrante.appendChild(inputNuevointegrante);
+
                 const agregarIntegrantes = document.createElement("button");
                 agregarIntegrantes.textContent = "Agregar Integrante";
-                grupoeje.appendChild(agregarIntegrantes);
+                agregarIntegrantes.id.add("submit-integrante");
+                agregarIntegrantes.type.add("submit");
+                formularioIntegrante.appendChild(agregarIntegrantes);
 
+                grupoeje.appendChild(formularioIntegrante);
+                
                 groupSelector.appendChild(grupoeje);
             });
         })
