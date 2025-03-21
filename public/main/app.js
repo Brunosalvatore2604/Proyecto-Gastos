@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
 
                 const integrantes = document.createElement("h3");
                 integrantes.textContent = `adminID: ${grupo.id}`;
+                integrantes.id = "admin";
                 grupoeje.appendChild(integrantes);
 
                 const formularioIntegrante = document.createElement("form");
@@ -124,7 +125,8 @@ document.getElementById("form-group-creation").addEventListener("submit", async 
         if(respuesta.ok){
             alert("Grupo creado exitosamente");
         }else{
-            alert(data.mensaje);
+            alert("Error creando Grupo");
+            console.error("Error Creando Grupo: ",data.mensaje);
         }
 
     }catch(err){
@@ -132,4 +134,45 @@ document.getElementById("form-group-creation").addEventListener("submit", async 
     }
 
 
+})
+
+document.addEventListener("click",async event =>{
+
+    const target = event.target;
+    const contenedor = target.closest("div");
+
+    if(!(contenedor.classList == "group-eje")){
+        return;
+    }
+
+    const formulario = target.closest("form");
+    const idIntegrante = formulario.getElementById("agregar-integrante").value;
+    const idGrupo = contenedor.getElementById("admin").textContent;
+
+    const value ={
+        idIntegrante,
+        idGrupo
+    };
+
+    if(!value.idIntegrante){
+        alert("Campo vacio");
+        return;
+    }
+
+    await fetch("/agregar-integrante",{
+        method:"POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(value)
+    })
+    .then(res => res.json())
+    .then(data =>{
+        if(res.ok){
+            alert("Usuario Agregado correctamente");
+        }else{
+            alert("Error Agregando Usuario");
+            console.error("Error Creando Grupo: ",data.mensaje);
+        }
+    }).catch((err)=>{
+        console.error("Error:",err);
+    });
 })

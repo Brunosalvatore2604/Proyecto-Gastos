@@ -151,6 +151,33 @@ app.get("/main-getGrupos",(req,res)=>{
     })
 });
 
+// 📌 Ruta para get grupos por usuario
+app.post("/agregar-integrante",(req,res)=>{
+    const {idIntegante,idGrupo} = req.body;
+
+    const checkquerry = `SELECT nombre_usuario,id FROM Usuarios WHERE id = ?`;
+    db.query(checkquerry,[idIntegante],(err,results)=>{
+        if(err){
+            console.error("Error Agregando Interantes",err);
+            return res.status(500).json({mensaje:`Error: ${err}`});
+        }
+        if(results.length==0){
+            console.log("Usuario no existente");
+            return res.status(404).json({mensaje:`Error: Ese Usuario no existe`});
+        }
+        
+        const insertQuerry = `INSERT INTO Usuarios_Grupos (id_usuario, id_grupo) VALUES (?, ?)`;
+        db.query(insertQuerry,[idIntegante, idGrupo],(err,results)=>{
+            if(err){
+                console.error("Error Agregando Integrante: ",err);
+                return res.status(500).json({mensaje:`Error: ${err}`});
+            }
+            return res.status(201).json({mensaje: `Usuario agregado con exito`});
+        });
+    });
+
+})
+
 // 📌 Ajustar el puerto para que use el de Railway
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
