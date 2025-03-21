@@ -109,6 +109,7 @@ document.getElementById("form-group-creation").addEventListener("submit", async 
         });
 
         const data = await respuesta.json();
+        console.log(data);
         if(respuesta.ok){
             alert("Grupo creado exitosamente");
         }else{

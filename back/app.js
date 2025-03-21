@@ -123,7 +123,7 @@ app.post("/crearGrupo",(req,res)=>{
             }
             const idGrupo = results.insertId;
             const querry2 = `INSERT INTO Usuarios_Grupos (id_usuario, id_grupo) VALUES (?, ?)`;
-            db.querry(querry2,[idCreador, idGrupo],(err,results)=>{
+            db.query(querry2,[idCreador, idGrupo],(err,results)=>{
                 if(err){
                     console.error("Error creando grupos",err);
                     return res.status(500).json({mensaje:`Error: ${err}`});
