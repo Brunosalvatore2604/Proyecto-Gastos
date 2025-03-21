@@ -15,22 +15,13 @@ document.addEventListener("DOMContentLoaded", async()=> {
         return;
     }
 
-    console.log("Token enviado:", token);
     try{
         await fetch("/main",{
             method: "GET",
             headers: {"Authorization" : "Bearer "+token}
-        }).then(res => {
-            console.log("Response headers:", res.headers.get("content-type")); // Ver qué tipo de respuesta devuelve
-            return res.text();  // Cambiar a .text() para ver la respuesta real
-        })
-        .then(text => {
-            console.log("Response text:", text); // Ver si es HTML o JSON
-            return JSON.parse(text); // Intentar parsear manualmente
-        })
+        }).then(res => res.json())
         .then(data =>{
             if(data.mensaje){
-                console.log(data);
                 document.getElementById("nombre-usuario").textContent = `Nombre de usuario: ${data.mensaje}`;
                 document.getElementById("id-usuario").textContent = `ID: ${data.id}`;
             }else{
