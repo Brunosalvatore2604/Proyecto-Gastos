@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
         return;
     }
 
+    console.log("Token enviado:", token);
     try{
         await fetch("/main",{
             method: "GET",
