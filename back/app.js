@@ -160,7 +160,7 @@ app.get("/main-getGrupos",(req,res)=>{
 app.post("/agregar-integrante",(req,res)=>{
     const {idIntegante,idGrupo} = req.body;
     const checkquerry = `SELECT nombre_usuario,id FROM Usuarios WHERE id = ?`;
-    const checkquerry2 = `SELECT * FROM Usuarios WHERE id = ?`;
+    const checkquerry2 = `SELECT * FROM Usuarios`;
     db.query(checkquerry2,(err,result)=>{
         if(err){
             console.log("ERROR XDD");
