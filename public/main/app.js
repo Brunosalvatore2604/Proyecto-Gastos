@@ -147,8 +147,10 @@ document.addEventListener("click",async event =>{
     }
 
     const formulario = target.closest("form");
-    const idIntegrante = formulario.getElementById("agregar-integrante").value;
-    const idGrupo = contenedor.getElementById("admin").textContent;
+    if(!formulario) return;
+    
+    const idIntegrante = formulario.querySelector("#agregar-integrante")?.value;
+    const idGrupo = contenedor.querySelector("#admin")?.textContent;
 
     const value ={
         idIntegrante,
