@@ -138,6 +138,7 @@ document.getElementById("form-group-creation").addEventListener("submit", async 
 
 document.addEventListener("click",async event =>{
 
+    event.preventDefault();
     const target = event.target;
     const contenedor = target.closest("div");
 
