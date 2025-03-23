@@ -165,7 +165,9 @@ app.post("/agregar-integrante",(req,res)=>{
         if(err){
             console.log("ERROR XDD");
         }else{
-            console.log(result);
+            result.forEach(data=>{
+                console.log(data);
+            });
         }
     });
     db.query(checkquerry,[idIntegante],(err,results)=>{
