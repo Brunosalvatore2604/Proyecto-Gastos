@@ -156,26 +156,27 @@ document.addEventListener("submit",async event =>{
         idIntegrante,
         idGrupo
     };
+    
+    console.log(value);
 
     if(!value.idIntegrante){
         alert("Campo vacio");
         return;
     }
 
-    await fetch("/agregar-integrante",{
-        method:"POST",
+    const respuesta = await fetch("/agregar-integrante",{
+        method: "POST",
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify(value)
-    })
-    .then(res => res.json())
-    .then(data =>{
-        if(res.ok){
-            alert("Usuario Agregado correctamente");
-        }else{
-            alert("Error Agregando Usuario");
-            console.error("Error Creando Grupo: ",data.mensaje);
-        }
-    }).catch((err)=>{
-        console.error("Error:",err);
     });
+
+    const data =  await respuesta.json();
+    console.log("Respuesta del servidor: ",data);
+
+    if(respuesta.ok){
+        alert("Usuario Agregado con exito");
+    }else{
+        alert("Error Agregando Integrante");
+        console.error(data.mensaje);
+    }
 })
