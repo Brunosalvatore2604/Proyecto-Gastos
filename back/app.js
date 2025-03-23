@@ -160,6 +160,14 @@ app.get("/main-getGrupos",(req,res)=>{
 app.post("/agregar-integrante",(req,res)=>{
     const {idIntegante,idGrupo} = req.body;
     const checkquerry = `SELECT nombre_usuario,id FROM Usuarios WHERE id = ?`;
+    const checkquerry2 = `SELECT * FROM Usuarios WHERE id = ?`;
+    db.query(checkquerry2,(err,result)=>{
+        if(err){
+            console.log("ERROR XDD");
+        }else{
+            console.log(result);
+        }
+    });
     db.query(checkquerry,[idIntegante],(err,results)=>{
         if(err){
             console.error("Error Agregando Interantes",err);
