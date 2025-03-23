@@ -136,7 +136,7 @@ document.getElementById("form-group-creation").addEventListener("submit", async 
 
 })
 
-document.addEventListener("click",async event =>{
+document.addEventListener("submit",async event =>{
 
     event.preventDefault();
     const target = event.target;
@@ -148,7 +148,7 @@ document.addEventListener("click",async event =>{
 
     const formulario = target.closest("form");
     if(!formulario) return;
-    
+
     const idIntegrante = formulario.querySelector("#agregar-integrante")?.value;
     const idGrupo = contenedor.querySelector("#admin")?.textContent;
 
