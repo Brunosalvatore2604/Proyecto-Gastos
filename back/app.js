@@ -35,6 +35,11 @@ const db = mysql.createConnection({
     port: process.env.DB_PORT || 3306
 });
 
+console.log(process.env.DB_HOST);
+console.log(process.env.DB_USER);
+console.log(process.env.DB_PASSWORD);
+console.log(process.env.DB_PORT);
+
 // Conectar a la base de datos
 db.connect(err => {
     if (err) {
@@ -154,7 +159,6 @@ app.get("/main-getGrupos",(req,res)=>{
 // 📌 Ruta para get grupos por usuario
 app.post("/agregar-integrante",(req,res)=>{
     const {idIntegante,idGrupo} = req.body;
-
     const checkquerry = `SELECT nombre_usuario,id FROM Usuarios WHERE id = ?`;
     db.query(checkquerry,[idIntegante],(err,results)=>{
         if(err){
