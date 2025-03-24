@@ -155,9 +155,7 @@ app.get("/main-getGrupos",(req,res)=>{
 // 📌 Ruta para get grupos por usuario
 app.post("/agregar-integrante",(req,res)=>{
     const values = req.body;
-    const values2 = JSON.parse(values);
-    console.log(req.headers["content-type"]);
-    console.log(typeof(values),values2);
+    const idIntegante = values.idIntegante;
     const checkquerry = `SELECT * FROM Usuarios WHERE id = ?`;
     db.query(checkquerry,[idIntegante],(err,results)=>{
         if(err){
@@ -165,7 +163,6 @@ app.post("/agregar-integrante",(req,res)=>{
             return res.status(500).json({mensaje:`Error: ${err}`});
         }
         if(results.length==0){
-            console.log(results);
             console.log("Usuario no existente");
             return res.status(404).json({mensaje:`Error: Ese Usuario no existe`});
         }
