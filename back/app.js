@@ -155,9 +155,9 @@ app.get("/main-getGrupos",(req,res)=>{
 // 📌 Ruta para get grupos por usuario
 app.post("/agregarIntegrante",(req,res)=>{
     console.log(req.body);
-    console.log(idIntegante)
+    const {idIntegrante,idGrupo} = req.body;
     const checkquerry = `SELECT * FROM Usuarios WHERE id = ?`;
-    db.query(checkquerry,[idIntegante],(err,results)=>{
+    db.query(checkquerry,[idIntegrante],(err,results)=>{
         if(err){
             console.error("Error Agregando Interantes",err);
             return res.status(500).json({mensaje:`Error: ${err}`});
@@ -168,7 +168,7 @@ app.post("/agregarIntegrante",(req,res)=>{
         }
         
         const insertQuerry = `INSERT INTO Usuarios_Grupos (id_usuario, id_grupo) VALUES (?, ?)`;
-        db.query(insertQuerry,[idIntegante,idGrupo],(err,results)=>{
+        db.query(insertQuerry,[idIntegrante,idGrupo],(err,results)=>{
             if(err){
                 console.error("Error Agregando Integrante: ",err);
                 return res.status(500).json({mensaje:`Error: ${err}`});
