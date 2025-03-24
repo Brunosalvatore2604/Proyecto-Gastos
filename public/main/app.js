@@ -149,7 +149,7 @@ document.addEventListener("submit",async event =>{
     const formulario = target.closest("form");
     if(!formulario) return;
 
-    const idIntegrante = formulario.querySelector("#agregar-integrante")?.value;
+    const idIntegrante = parseInt(formulario.querySelector("#agregar-integrante")?.value);
     const idGrupo = 1;
 
     const value ={
