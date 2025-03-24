@@ -35,10 +35,6 @@ const db = mysql.createConnection({
     port: process.env.DB_PORT || 3306
 });
 
-console.log(process.env.DB_HOST);
-console.log(process.env.DB_USER);
-console.log(process.env.DB_PASSWORD);
-console.log(process.env.DB_PORT);
 
 // Conectar a la base de datos
 db.connect(err => {
@@ -159,23 +155,15 @@ app.get("/main-getGrupos",(req,res)=>{
 // 📌 Ruta para get grupos por usuario
 app.post("/agregar-integrante",(req,res)=>{
     const {idIntegante,idGrupo} = req.body;
-    const checkquerry = `SELECT nombre_usuario,id FROM Usuarios WHERE id = ?`;
-    const checkquerry2 = `SELECT * FROM Usuarios`;
-    db.query(checkquerry2,(err,result)=>{
-        if(err){
-            console.log("ERROR XDD");
-        }else{
-            result.forEach(data=>{
-                console.log(data);
-            });
-        }
-    });
+    console.log(idIntegante);
+    const checkquerry = `SELECT * FROM Usuarios WHERE id = ?`;
     db.query(checkquerry,[idIntegante],(err,results)=>{
         if(err){
             console.error("Error Agregando Interantes",err);
             return res.status(500).json({mensaje:`Error: ${err}`});
         }
         if(results.length==0){
+            console.log(results);
             console.log("Usuario no existente");
             return res.status(404).json({mensaje:`Error: Ese Usuario no existe`});
         }
