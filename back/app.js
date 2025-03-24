@@ -154,7 +154,7 @@ app.get("/main-getGrupos",(req,res)=>{
 
 // 📌 Ruta para get grupos por usuario
 app.post("/agregarIntegrante",(req,res)=>{
-    const {idIntegante,idGrupo} = req.body;
+    const idIntegante = req.body.idIntegante;
     console.log(idIntegante,idGrupo)
     const checkquerry = `SELECT * FROM Usuarios WHERE id = ?`;
     db.query(checkquerry,[idIntegante],(err,results)=>{
