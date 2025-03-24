@@ -3,7 +3,9 @@ const app = express();
 const path = require("path");
 const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
+app.use(cors());
 app.use(express.json());
 
 //verificar token
@@ -23,8 +25,6 @@ app.get("/main",verificarToken,(req,res)=>{
     console.log("llegamos al main xd");
     res.status(200).json({mensaje:req.usuario.nombre,id:req.usuario.id});
 });
-
-app.use(express.static(path.join(__dirname, "../public"))); // Asegura que los archivos estáticos sean accesibles
 
 // 📌 Configuración de la base de datos usando variables de entorno de Railway
 const db = mysql.createConnection({
@@ -154,8 +154,7 @@ app.get("/main-getGrupos",(req,res)=>{
 
 // 📌 Ruta para get grupos por usuario
 app.post("/agregar-integrante",(req,res)=>{
-    const values = req.body;
-    const idIntegante = values.idIntegante;
+    const {idIntegante} = req.body;
     const checkquerry = `SELECT * FROM Usuarios WHERE id = ?`;
     db.query(checkquerry,[idIntegante],(err,results)=>{
         if(err){
@@ -178,6 +177,8 @@ app.post("/agregar-integrante",(req,res)=>{
     });
 
 });
+
+app.use(express.static(path.join(__dirname, "../public"))); 
 
 // 📌 Ajustar el puerto para que use el de Railway
 const PORT = process.env.PORT || 3000;
