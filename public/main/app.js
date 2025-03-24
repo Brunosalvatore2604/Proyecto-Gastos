@@ -150,7 +150,7 @@ document.addEventListener("submit",async event =>{
     if(!formulario) return;
 
     const idIntegrante = formulario.querySelector("#agregar-integrante")?.value;
-    const idGrupo = contenedor.querySelector("#admin")?.textContent;
+    const idGrupo = 1;
 
     const value ={
         idIntegrante,
@@ -164,7 +164,7 @@ document.addEventListener("submit",async event =>{
         return;
     }
 
-    const respuesta = await fetch("/agregar-integrante",{
+    const respuesta = await fetch("/agregarIntegrante",{
         method: "POST",
         headers: {"Content-Type":"application/json"},
         body: JSON.stringify(value)
