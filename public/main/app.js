@@ -151,6 +151,7 @@ document.addEventListener("submit",async event =>{
 
     const idIntegrante = formulario.querySelector("#agregar-integrante")?.value;
     const idGrupo = 1;
+    console.log(typeof(idIntegrante),idIntegrante);
 
     const value ={
         idIntegrante,
