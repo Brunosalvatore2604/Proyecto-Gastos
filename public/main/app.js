@@ -178,5 +178,6 @@ document.addEventListener("submit",async event =>{
     }else{
         alert("Error Agregando Integrante");
         console.error(data.mensaje);
+        console.error(respuesta.status);
     }
 })

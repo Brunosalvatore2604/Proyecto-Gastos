@@ -153,7 +153,7 @@ app.get("/main-getGrupos",(req,res)=>{
 });
 
 // 📌 Ruta para get grupos por usuario
-app.post("/agregar-integrante",(req,res)=>{
+app.post("/agregar-integrante",express.json(),(req,res)=>{
     const {idIntegante,idGrupo} = req.body;
     console.log(req.headers["content-type"]);
     console.log(idIntegante);
@@ -179,7 +179,7 @@ app.post("/agregar-integrante",(req,res)=>{
         });
     });
 
-})
+});
 
 // 📌 Ajustar el puerto para que use el de Railway
 const PORT = process.env.PORT || 3000;
