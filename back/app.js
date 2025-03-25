@@ -142,11 +142,12 @@ app.get("/main-getGrupos",(req,res)=>{
     const payload = JSON.parse(atob(payload64));
     const id = payload.id;
 
-    const querry = `SELECT id g.id,nombre_grupo g.nombre,id_admin g.admin
+    const querry = `SELECT g.id, g.nombre_grupo, g.id_admin 
                     FROM Grupos g
-                    INNER JOIN Usuarios_Grupos ON g.id = id_grupo
-                    WHERE id_usuario = ?
-                    GRUP BY g.id`
+                    INNER JOIN Usuarios_Grupos ug ON g.id = ug.id_grupo
+                    WHERE ug.id_usuario = ?
+                    GROUP BY g.id;
+                    `
     db.query(querry,[id],(err,resultado)=>{
         if(err){
             return res.status(500).json({mensaje:"Error interno en consulta"});
