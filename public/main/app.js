@@ -53,11 +53,11 @@ document.addEventListener("DOMContentLoaded", async()=> {
                 grupoeje.classList.add("group-eje");
 
                 const nombre = document.createElement("h3");
-                nombre.textContent = `Nombre: ${grupo.nombre_grupo}`;
+                nombre.textContent = `Nombre:${grupo.nombre_grupo}`;
                 grupoeje.appendChild(nombre);
 
                 const admin = document.createElement("h3");
-                admin.textContent = `adminID: ${grupo.id_admin}`;
+                admin.textContent = `adminID:${grupo.id_admin}`;
                 admin.id = "admin";
                 grupoeje.appendChild(admin);
 
@@ -194,4 +194,32 @@ document.addEventListener("submit",async event =>{
         console.error(data.mensaje);
         console.error(respuesta.status);
     }
+})
+
+document.addEventListener("click",async (e)=>{
+    e.preventDefault();
+
+    const target = e.target;
+    const div = e.target.closest("div");
+    if(div.classList != "group-eje"){
+        return;
+    }
+
+    const divGastos = document.getElementsByClassName("gastos");
+    const gasto = document.createElement("div");
+    gasto.classList.add("gasto-ejemplo");
+    divGastos.appendChild(gasto);
+
+    const nombreGrupo = div.querySelector("h3").textContent.split(":")[1];
+    const creadorGasto = div.querySelector("#admin").textContent.split(":")[1];
+
+    const grupo = document.createElement("h3");
+    grupo.textContent = `Grupo: ${nombreGrupo}`;
+    gasto.appendChild(grupo);
+    
+    const creador = document.createElement("h3");
+    creador.textContent = `id Creador: ${creadorGasto}`;
+    gasto.appendChild(creador);
+
+    
 })
