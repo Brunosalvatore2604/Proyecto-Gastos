@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
                 grupoeje.appendChild(admin);
 
                 const idGrupo = document.createElement("h3");
-                idGrupo.textContent = `IDgrupo: ${grupo.id}`;
+                idGrupo.textContent = `IDgrupo:${grupo.id}`;
                 idGrupo.id = "idGrupo";
                 grupoeje.appendChild(idGrupo);
 
@@ -164,7 +164,7 @@ document.addEventListener("submit",async event =>{
     if(!formulario) return;
 
     const idIntegrante = parseInt(formulario.querySelector("#agregar-integrante")?.value);
-    const idGrupo = 1;
+    const idGrupo = contenedor.querySelector("#idGrupo").textContent.split(":")[1];
 
     const value ={
         idIntegrante,
