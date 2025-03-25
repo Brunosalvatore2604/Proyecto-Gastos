@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
             }
             const groupSelector = document.querySelector(".group-selector");
             groupSelector.innerHTML = "";
-
+            console.log(data.resultado);
             data.resultado.forEach(grupo =>{
 
                 const grupoeje = document.createElement("div");
