@@ -142,15 +142,20 @@ app.get("/main-getGrupos",(req,res)=>{
     const payload = JSON.parse(atob(payload64));
     const id = payload.id;
 
-    const querry = `SELECT nombre_grupo,id FROM Grupos WHERE id_admin = ?`;
+    const querry = `SELECT id g.id,nombre_grupo g.nombre,id_admin g.admin
+                    FROM Grupos g
+                    INNER JOIN Usuarios_Grupos ON g.id = id_grupo
+                    WHERE id_usuario = ?
+                    GRUP BY g.id`
     db.query(querry,[id],(err,resultado)=>{
         if(err){
             return res.status(500).json({mensaje:"Error interno en consulta"});
         }
+            return res.status(200).json(resultado);
+        });
         
-        return res.status(200).json({resultado});
-    })
 });
+   
 
 // 📌 Ruta para get grupos por usuario
 app.post("/agregarIntegrante",(req,res)=>{

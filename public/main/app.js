@@ -56,10 +56,15 @@ document.addEventListener("DOMContentLoaded", async()=> {
                 nombre.textContent = `Nombre: ${grupo.nombre_grupo}`;
                 grupoeje.appendChild(nombre);
 
-                const integrantes = document.createElement("h3");
-                integrantes.textContent = `adminID: ${grupo.id}`;
-                integrantes.id = "admin";
-                grupoeje.appendChild(integrantes);
+                const admin = document.createElement("h3");
+                admin.textContent = `adminID: ${grupo.id_admin}`;
+                admin.id = "admin";
+                grupoeje.appendChild(admin);
+
+                const idGrupo = document.createElement("h3");
+                idGrupo.textContent = `IDgrupo: ${grupo.id}`;
+                idGrupo.id = "idGrupo";
+                grupoeje.appendChild(idGrupo);
 
                 const formularioIntegrante = document.createElement("form");
                 formularioIntegrante.id = "form-integrante";
