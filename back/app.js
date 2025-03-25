@@ -152,10 +152,9 @@ app.get("/main-getGrupos",(req,res)=>{
         if(err){
             return res.status(500).json({mensaje:"Error interno en consulta"});
         }
-            console.log(resultado);
-            return res.status(200).json(resultado);
+        console.log(resultado);
+        return res.status(200).json({resultado:resultado});
         });
-        
 });
    
 
