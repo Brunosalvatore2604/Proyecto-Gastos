@@ -66,20 +66,29 @@ document.addEventListener("DOMContentLoaded", async()=> {
                 idGrupo.id = "idGrupo";
                 grupoeje.appendChild(idGrupo);
 
-                const formularioIntegrante = document.createElement("form");
-                formularioIntegrante.id = "form-integrante";
+                
 
-                const inputNuevointegrante = document.createElement("input");
-                inputNuevointegrante.id = "agregar-integrante";
-                formularioIntegrante.appendChild(inputNuevointegrante);
+                const payload64 = token.split(".")[1];
+                const payload = JSON.parse(atob(payload64));
+                const id = payload.id;
 
-                const agregarIntegrantes = document.createElement("button");
-                agregarIntegrantes.textContent = "Agregar Integrante";
-                agregarIntegrantes.id = "submit-integrante";
-                agregarIntegrantes.type = "submit";
-                formularioIntegrante.appendChild(agregarIntegrantes);
+                if(id==grupo.id_admin){
+                    
+                    const formularioIntegrante = document.createElement("form");
+                    formularioIntegrante.id = "form-integrante";
+                    
+                    const inputNuevointegrante = document.createElement("input");
+                    inputNuevointegrante.id = "agregar-integrante";
+                    formularioIntegrante.appendChild(inputNuevointegrante);
 
-                grupoeje.appendChild(formularioIntegrante);
+                    const agregarIntegrantes = document.createElement("button");
+                    agregarIntegrantes.textContent = "Agregar Integrante";
+                    agregarIntegrantes.id = "submit-integrante";
+                    agregarIntegrantes.type = "submit";
+                    formularioIntegrante.appendChild(agregarIntegrantes);
+
+                    grupoeje.appendChild(formularioIntegrante);
+                }
                 
                 groupSelector.appendChild(grupoeje);
             });
