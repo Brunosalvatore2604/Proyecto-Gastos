@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
                 const nuevoGasto = document.createElement("button");
                 nuevoGasto.classList.add("nuevo-gasto");
                 nuevoGasto.textContent = "Agregar gasto";
-                nuevoGasto.type = "submit"
+                nuevoGasto.type = "button"
                 grupoeje.appendChild(nuevoGasto);
 
                 const payload64 = token.split(".")[1];
@@ -200,17 +200,18 @@ document.addEventListener("submit",async event =>{
     }
 })
 
-document.addEventListener("submit",async (e)=>{
+document.addEventListener("button",async (e) =>{
     e.preventDefault();
 
     const gastoExists = document.querySelector("#gasto-nuevo");
     if(gastoExists){
+        console.log("aca 1");
         return;
     }
 
     const target = e.target;
-    const t = target.querySelector(".nuevo-gasto");
-    if(!t){
+    if(!(target.classList == "nuevo-gasto")){
+        console.log("aca 2");
         return;
     }
 
