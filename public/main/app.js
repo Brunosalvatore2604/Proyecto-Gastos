@@ -203,19 +203,17 @@ document.addEventListener("submit",async event =>{
 document.addEventListener("click",async e =>{
 
     e.preventDefault();
-    console.log(0);
+
     const gastoExists = document.querySelector("#gasto-nuevo");
     if(gastoExists){
-        console.error("aca 1");
         return;
     }
 
     const target = e.target;
     if(!(target.classList == "nuevo-gasto")){
-        console.error("aca 2");
         return;
     }
-    
+
     const div = e.target.closest("div");
 
     const divGastos = document.querySelector(".gastos");
@@ -225,14 +223,21 @@ document.addEventListener("click",async e =>{
     divGastos.appendChild(gasto);
 
     const nombreGrupo = div.querySelector("h3").textContent.split(":")[1];
+    const idgrupo = div.querySelector("#idGrupo").textContent.split(":")[1];
     const creadorGasto = div.querySelector("#admin").textContent.split(":")[1];
 
     const grupo = document.createElement("h3");
     grupo.textContent = `Grupo: ${nombreGrupo}`;
     gasto.appendChild(grupo);
-    
+
+    const grupoid = document.createElement("h3");
+    grupoid.id = "grupo-id";
+    grupoid.textContent = `ID grupo:${idgrupo}`;
+    gasto.appendChild(grupoid);
+
     const creador = document.createElement("h3");
-    creador.textContent = `id Creador: ${creadorGasto}`;
+    creador.textContent = `id Creador:${creadorGasto}`;
+    creador.id = "creador-gasto"
     gasto.appendChild(creador);
 
     const formGasto = document.createElement("form");
@@ -245,6 +250,14 @@ document.addEventListener("click",async e =>{
     const inputComprador = document.createElement("input");
     inputComprador.id = "input-comprador";
     formGasto.appendChild(inputComprador);
+
+    const textMotivo = document.createElement("h3");
+    textMotivo.textContent = "Motivo:";
+    formGasto.appendChild(textMotivo);
+
+    const inputMotivo = document.createElement("input");
+    inputMotivo.id = "input-motivo";
+    formGasto.appendChild(inputMotivo);
 
     const textDinero = document.createElement("h3");
     textDinero.textContent = "Dinero:";
@@ -264,9 +277,23 @@ document.addEventListener("click",async e =>{
 
     const submitGasto = document.createElement("button");
     submitGasto.type = "submit";
+    submitGasto.textContent = "Nuevo Gasto";
+    submitGasto.id = "agregar-gasto"
     formGasto.appendChild(submitGasto);
 
     gasto.appendChild(formGasto);
 
 });
 
+document.addEventListener("submit",async e =>{
+    e.preventDefault();
+
+    const target = e.target;
+    if(!(target.classList=="agregar-gasto")){
+        return;
+    }
+
+    const idGrupo = target.querySelector("#grupo-id").textContent.split(":")[1];
+    const idUsuario = target.querySelector("#creador-gasto").textContent.split(":")[1];
+    const motivo = target.querySelector("#input-motivo").value;
+})
