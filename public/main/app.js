@@ -200,7 +200,7 @@ document.addEventListener("submit",async event =>{
     }
 })
 
-document.addEventListener("button",async (e) =>{
+document.addEventListener("click",async (e) =>{
     e.preventDefault();
 
     const gastoExists = document.querySelector("#gasto-nuevo");
