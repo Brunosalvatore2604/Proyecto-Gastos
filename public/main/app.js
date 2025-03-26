@@ -224,13 +224,25 @@ document.addEventListener("click",async (e)=>{
     const formGasto = document.createElement("form");
     formGasto.id = "form-gasto";
     
+    const textComprador = document.createElement("h3");
+    textComprador.textContent = "Comprador:";
+    formGasto.appendChild(textComprador);
+
     const inputComprador = document.createElement("input");
     inputComprador.id = "input-comprador";
     formGasto.appendChild(inputComprador);
 
+    const textDinero = document.createElement("h3");
+    textDinero.textContent = "Dinero:";
+    formGasto.appendChild(textDinero);
+
     const inputDinero = document.createElement("input");
     inputDinero.id = "input-dinero";
     formGasto.appendChild(inputDinero);
+
+    const textFecha = document.createElement("h3");
+    textFecha.textContent = "Dinero:";
+    formGasto.appendChild(textFecha);
 
     const inputFecha = document.createElement("input");
     inputFecha.id = "input-fecha";
@@ -238,7 +250,4 @@ document.addEventListener("click",async (e)=>{
 
     gasto.appendChild(formGasto);
 
-    const check = document.createElement("checkbox");
-    check.id = "check";
-    gasto.appendChild(check);
 })

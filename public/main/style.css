@@ -132,6 +132,13 @@ main{
     transition: 0.2s ease;
 }
 
+.gasto-ejemplo form{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+}
+
 .gasto-ejemplo:hover{
     transform: scale(1.03);
 }
