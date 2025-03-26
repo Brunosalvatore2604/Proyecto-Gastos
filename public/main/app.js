@@ -209,8 +209,8 @@ document.addEventListener("submit",async (e)=>{
     }
 
     const target = e.target;
-
-    if(target.classList != "nuevo-gasto"){
+    const t = target.querySelector(".nuevo-gasto");
+    if(!t){
         return;
     }
 
