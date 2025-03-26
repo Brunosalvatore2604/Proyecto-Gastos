@@ -201,7 +201,7 @@ document.addEventListener("submit",async event =>{
 });
 
 document.addEventListener("click",async e =>{
-    
+
     e.preventDefault();
     console.log(0);
     const gastoExists = document.querySelector("#gasto-nuevo");
@@ -215,6 +215,8 @@ document.addEventListener("click",async e =>{
         console.error("aca 2");
         return;
     }
+    
+    const div = e.target.closest("div");
 
     const divGastos = document.querySelector(".gastos");
     const gasto = document.createElement("div");
