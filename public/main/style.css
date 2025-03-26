@@ -138,7 +138,8 @@ main{
     justify-content: start;
     align-items: center;
     overflow-y: auto;
-    height: 50px;
+    height: 60%px;
+    width: 80%;
 }
 
 .gasto-ejemplo form input{

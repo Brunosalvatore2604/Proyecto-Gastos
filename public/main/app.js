@@ -66,7 +66,11 @@ document.addEventListener("DOMContentLoaded", async()=> {
                 idGrupo.id = "idGrupo";
                 grupoeje.appendChild(idGrupo);
 
-                
+                const nuevoGasto = document.createElement("button");
+                nuevoGasto.classList.add("nuevo-gasto");
+                nuevoGasto.textContent = "Agregar gasto";
+                nuevoGasto.type = "submit"
+                grupoeje.appendChild(nuevoGasto);
 
                 const payload64 = token.split(".")[1];
                 const payload = JSON.parse(atob(payload64));
@@ -196,7 +200,7 @@ document.addEventListener("submit",async event =>{
     }
 })
 
-document.addEventListener("click",async (e)=>{
+document.addEventListener("submit",async (e)=>{
     e.preventDefault();
 
     const gastoExists = document.querySelector("#gasto-nuevo");
@@ -205,8 +209,8 @@ document.addEventListener("click",async (e)=>{
     }
 
     const target = e.target;
-    const div = e.target.closest("div");
-    if(div.classList != "group-eje"){
+    const div = target.closest("div");
+    if(div.classList != "nuevo-gasto"){
         return;
     }
 
@@ -254,11 +258,11 @@ document.addEventListener("click",async (e)=>{
     inputFecha.id = "input-fecha";
     formGasto.appendChild(inputFecha);
 
-    const submitGasto = document.createElement("buton");
+    const submitGasto = document.createElement("button");
     submitGasto.type = "submit";
     formGasto.appendChild(submitGasto);
 
     gasto.appendChild(formGasto);
 
+});
 
-})
