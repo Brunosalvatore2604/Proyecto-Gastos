@@ -199,6 +199,11 @@ document.addEventListener("submit",async event =>{
 document.addEventListener("click",async (e)=>{
     e.preventDefault();
 
+    const gastoExists = document.querySelector("#gasto-nuevo");
+    if(!gastoExists){
+        return;
+    }
+    
     const target = e.target;
     const div = e.target.closest("div");
     if(div.classList != "group-eje"){
@@ -208,6 +213,7 @@ document.addEventListener("click",async (e)=>{
     const divGastos = document.querySelector(".gastos");
     const gasto = document.createElement("div");
     gasto.classList.add("gasto-ejemplo");
+    gasto.id = "gasto-nuevo";
     divGastos.appendChild(gasto);
 
     const nombreGrupo = div.querySelector("h3").textContent.split(":")[1];
@@ -248,6 +254,11 @@ document.addEventListener("click",async (e)=>{
     inputFecha.id = "input-fecha";
     formGasto.appendChild(inputFecha);
 
+    const submitGasto = document.createElement("buton");
+    submitGasto.type = "submit";
+    formGasto.appendChild(submitGasto);
+
     gasto.appendChild(formGasto);
+
 
 })

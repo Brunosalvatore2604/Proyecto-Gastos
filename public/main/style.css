@@ -120,11 +120,11 @@ main{
 .gasto-ejemplo{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: start;
     background-color: #B9B28A;
     height: 150px;
-    width: 290px;
+    width: 80%;
     font-size: small;
     margin: 2px;
     padding: 2px;
@@ -171,7 +171,7 @@ main{
     display: flex;
     flex-direction: column;
     height: 150px;
-    width: 290px;
+    width: 80%;
     background-color: #B9B28A;
     padding: 2px;
     margin: 2px;
