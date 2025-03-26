@@ -209,8 +209,8 @@ document.addEventListener("submit",async (e)=>{
     }
 
     const target = e.target;
-    const div = target.closest("div");
-    if(div.classList != "nuevo-gasto"){
+
+    if(target.classList != "nuevo-gasto"){
         return;
     }
 
