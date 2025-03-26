@@ -200,10 +200,10 @@ document.addEventListener("click",async (e)=>{
     e.preventDefault();
 
     const gastoExists = document.querySelector("#gasto-nuevo");
-    if(!gastoExists){
+    if(gastoExists){
         return;
     }
-    
+
     const target = e.target;
     const div = e.target.closest("div");
     if(div.classList != "group-eje"){
