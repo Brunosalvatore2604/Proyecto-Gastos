@@ -221,5 +221,24 @@ document.addEventListener("click",async (e)=>{
     creador.textContent = `id Creador: ${creadorGasto}`;
     gasto.appendChild(creador);
 
+    const formGasto = document.createElement("form");
+    formGasto.id = "form-gasto";
     
+    const inputComprador = document.createElement("input");
+    inputComprador.id = "input-comprador";
+    formGasto.appendChild(inputComprador);
+
+    const inputDinero = document.createElement("input");
+    inputDinero.id = "input-dinero";
+    formGasto.appendChild(inputDinero);
+
+    const inputFecha = document.createElement("input");
+    inputFecha.id = "input-fecha";
+    formGasto.appendChild(inputFecha);
+
+    gasto.appendChild(formGasto);
+
+    const check = document.createElement("checkbox");
+    check.id = "check";
+    gasto.appendChild(check);
 })
