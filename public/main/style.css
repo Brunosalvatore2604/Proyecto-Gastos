@@ -111,7 +111,7 @@ main{
     align-items: center;
     background-color: #EBE5C2;
     height: 500px;
-    width: 325px;
+    width: 400px;
     padding: 2px;
     border: 2px solid black;
     overflow: auto;
@@ -141,6 +141,10 @@ main{
     height: 50px;
 }
 
+.gasto-ejemplo form input{
+    height: 80%;
+}
+
 .gasto-ejemplo:hover{
     transform: scale(1.03);
 }
@@ -156,7 +160,7 @@ main{
     justify-content: start;
     align-items: center;
     background-color: #EBE5C2;
-    width: 325px;
+    width: 400px;
     height: 500px;
     padding: 2px;
     border: 2px black solid;
