@@ -205,7 +205,7 @@ document.addEventListener("click",async (e)=>{
         return;
     }
 
-    const divGastos = document.getElementsByClassName("gastos");
+    const divGastos = document.querySelector(".gastos");
     const gasto = document.createElement("div");
     gasto.classList.add("gasto-ejemplo");
     divGastos.appendChild(gasto);
