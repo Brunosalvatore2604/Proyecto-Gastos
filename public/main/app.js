@@ -198,20 +198,21 @@ document.addEventListener("submit",async event =>{
         console.error(data.mensaje);
         console.error(respuesta.status);
     }
-})
+});
 
-document.addEventListener("click",async (e) =>{
+document.addEventListener("click",async e =>{
+    
     e.preventDefault();
-
+    console.log(0);
     const gastoExists = document.querySelector("#gasto-nuevo");
     if(gastoExists){
-        console.log("aca 1");
+        console.error("aca 1");
         return;
     }
 
     const target = e.target;
     if(!(target.classList == "nuevo-gasto")){
-        console.log("aca 2");
+        console.error("aca 2");
         return;
     }
 
