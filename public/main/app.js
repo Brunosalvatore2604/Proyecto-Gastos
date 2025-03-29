@@ -367,7 +367,7 @@ document.addEventListener("click", async e => {
         })
         .then(res =>res.json())
         .then(data =>{
-            if(!(res.ok)){
+            if(data.mensaje){
                 alert("Error Geteando gastos");
                 console.error("Error geteando gastos",data);
             }
