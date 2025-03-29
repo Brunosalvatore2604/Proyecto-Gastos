@@ -185,6 +185,31 @@ app.post("/agregarIntegrante",(req,res)=>{
 
 });
 
+// 📌 Ruta para get grupos por usuario
+app.post("nuevo-gasto",(req,res)=>{
+    const {idGrupo,idUsuario,motivo,dinero,fecha} = req.body;
+
+    const checkUsuario = `SELECT * FROM Usuarios WHERE id = ?`;
+    db.query(checkUsuario,[idUsuario],(err,res)=>{
+        if(err){
+            return res.status(500).json({mensaje:`Error creando Gasto: ${err}`});
+        }
+        if(res.length==0){
+            return res.status(400).json({mensaje:`Error ese usuario no existe`});
+        }
+    });
+
+    const insertQuerry = `INSERT INTO Gastos (id_grupo, id_usuario, motivo_gasto, plata)`;
+    db.query(insertQuerry,[idGrupo,idUsuario,motivo,dinero],(err,results)=>{
+        if(err){
+            return res.status(500).json({mensaje: `Error insertando gasto: ${err}`});
+        }
+        return res.status(201).json({mensaje:"Gasto agregado correctamente"});
+    })
+
+
+});
+
 app.use(express.static(path.join(__dirname, "../public"))); 
 
 // 📌 Ajustar el puerto para que use el de Railway

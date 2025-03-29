@@ -268,7 +268,7 @@ document.addEventListener("click",async e =>{
     formGasto.appendChild(inputDinero);
 
     const textFecha = document.createElement("h3");
-    textFecha.textContent = "Dinero:";
+    textFecha.textContent = "Fechas:";
     formGasto.appendChild(textFecha);
 
     const inputFecha = document.createElement("input");
@@ -278,8 +278,14 @@ document.addEventListener("click",async e =>{
     const submitGasto = document.createElement("button");
     submitGasto.type = "submit";
     submitGasto.textContent = "Nuevo Gasto";
-    submitGasto.id = "agregar-gasto"
+    submitGasto.id = "agregar-gasto";
     formGasto.appendChild(submitGasto);
+
+    const cancelarGasto = document.createElement("button");
+    cancelarGasto.type = "submit";
+    cancelarGasto.id = "cancelar-gasto";
+    cancelarGasto.textContent = "X";
+    gasto.appendChild(cancelarGasto);
 
     gasto.appendChild(formGasto);
 
@@ -289,11 +295,42 @@ document.addEventListener("submit",async e =>{
     e.preventDefault();
 
     const target = e.target;
-    if(!(target.classList=="agregar-gasto")){
+    if(!(target.id=="agregar-gasto")){
         return;
     }
 
     const idGrupo = target.querySelector("#grupo-id").textContent.split(":")[1];
-    const idUsuario = target.querySelector("#creador-gasto").textContent.split(":")[1];
+    const idUsuario = target.querySelector("#input-comprador").value;
     const motivo = target.querySelector("#input-motivo").value;
+    const dinero = target.querySelector("#input-dinero").value;
+    const fecha = target.querySelector("#input-fecha").value;
+
+    const values = {
+        idGrupo,
+        idUsuario,
+        motivo,
+        dinero,
+        fecha
+    }
+
+    try{
+        const respuesta = await fetch("/nuevo-gasto",{
+            method:"POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify(values)
+        });
+
+        const data = await respuesta.json();
+        console.log("Respuesta del Servidor: ",data.mensaje);
+
+        if(respuesta.ok){
+            alert("Gasto agregado correctamente");
+        }else{
+            alert("Error Creando gasto");
+            console.error("Error creando gasto: ",data.mensaje);
+        }
+    }catch(err){
+        alert(`Error Creando gasto`);
+        console.error("Error creando gasto: ",err);
+    }
 })
