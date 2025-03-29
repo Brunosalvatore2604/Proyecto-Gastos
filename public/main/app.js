@@ -296,8 +296,11 @@ document.addEventListener("submit",async e =>{
 
     const target = e.target;
     if(!(target.id=="agregar-gasto")){
+        console.log("1");
         return;
     }
+
+    console.log("2");
 
     const idGrupo = target.querySelector("#grupo-id").textContent.split(":")[1];
     const idUsuario = target.querySelector("#input-comprador").value;

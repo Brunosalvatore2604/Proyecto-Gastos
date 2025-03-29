@@ -186,7 +186,7 @@ app.post("/agregarIntegrante",(req,res)=>{
 });
 
 // 📌 Ruta para get grupos por usuario
-app.post("nuevo-gasto",(req,res)=>{
+app.post("/nuevo-gasto",(req,res)=>{
     const {idGrupo,idUsuario,motivo,dinero,fecha} = req.body;
 
     const checkUsuario = `SELECT * FROM Usuarios WHERE id = ?`;
