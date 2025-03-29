@@ -301,12 +301,12 @@ document.addEventListener("click",async e =>{
     }
 
     console.log("2");
-
+    const form = target.closest("form");
     const idGrupo = target.closest("div").querySelector("#grupo-id").textContent.split(":")[1];
-    const idUsuario = target.querySelector("#input-comprador").value;
-    const motivo = target.querySelector("#input-motivo").value;
-    const dinero = target.querySelector("#input-dinero").value;
-    const fecha = target.querySelector("#input-fecha").value;
+    const idUsuario = form.querySelector("#input-comprador").value;
+    const motivo = form.querySelector("#input-motivo").value;
+    const dinero = form.querySelector("#input-dinero").value;
+    const fecha = form.querySelector("#input-fecha").value;
 
     const values = {
         idGrupo,
