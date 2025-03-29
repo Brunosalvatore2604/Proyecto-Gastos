@@ -370,6 +370,7 @@ document.addEventListener("click", async e => {
             if(data.mensaje){
                 alert("Error Geteando gastos");
                 console.error("Error geteando gastos",data);
+                return;
             }
             const divGastos = document.querySelector(".gastos");
             divGastos.innerHTML = "";
@@ -379,12 +380,12 @@ document.addEventListener("click", async e => {
 
                 const idGasto = document.createElement("h3");
                 idGasto.id = "id-gasto";
-                idGasto.textContent = gastos.id;
+                idGasto.textContent = `ID gasto:${gastos.id}`;
                 gasto.appendChild(idGasto);
 
                 const titulo = document.createElement("h3");
                 titulo.id = "titulo-gasto"
-                titulo.textContent = gastos.motivo_gasto;
+                titulo.textContent = `Motivo gasto:${gastos.id}`
                 gasto.appendChild(titulo);
 
                 const grupo = document.createElement("h3");
@@ -402,6 +403,10 @@ document.addEventListener("click", async e => {
                 comprador.textContent = `Plata:${gastos.plata}$`;
                 gasto.appendChild(comprador);
                 
+                const textoPago = document.createElement("h3");
+                comprador.textContent = `¿Pago?:`;
+                gasto.appendChild(textoPago);
+
                 const pago = document.createElement("input");
                 pago.id = "pago-gasto"
                 pago.type = "checkbox";
