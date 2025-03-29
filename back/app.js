@@ -219,6 +219,9 @@ app.post("/get-gastos",(req,res)=>{
         if(err){
             return res.status(500).json({mensaje:`Error geteando gastos: ${err}`});
         }
+        if(resultado.length==0){
+            return res.status(404).json({mensaje:`No hay gastos para este grupo`});
+        }
         return res.status(200).json({resultado:resultado});
     })
 })
