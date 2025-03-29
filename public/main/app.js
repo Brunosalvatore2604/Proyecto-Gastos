@@ -361,7 +361,7 @@ document.addEventListener("click", async e => {
 
     try{
         await fetch("/get-gastos",{
-            method:"GET",
+            method:"POST",
             headers:{"Content-Type":"application/json"},
             body: JSON.stringify(values)
         })
