@@ -199,7 +199,7 @@ app.post("/nuevo-gasto",(req,res)=>{
         }
     });
 
-    const insertQuerry = `INSERT INTO Gastos (id_grupo, id_usuario, motivo_gasto, plata)`;
+    const insertQuerry = `INSERT INTO Gastos (id_grupo, id_usuario, motivo_gasto, plata) VALUES (?, ?, ?, ?)`;
     db.query(insertQuerry,[idGrupo,idUsuario,motivo,dinero],(err,results)=>{
         if(err){
             return res.status(500).json({mensaje: `Error insertando gasto: ${err}`});
