@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
             }
             const groupSelector = document.querySelector(".group-selector");
             groupSelector.innerHTML = "";
-            console.log(data.resultado);
+
             data.resultado.forEach(grupo =>{
 
                 const grupoeje = document.createElement("div");
@@ -346,3 +346,71 @@ document.addEventListener("click", e=>{
     }
     e.target.closest("div").remove();
 });
+
+document.addEventListener("click", async e => {
+    const div = e.target.closest("div");
+    if(!(div.classList=="group-eje")){
+        return;
+    }
+
+    const idGrupo = div.querySelector("#idGrupo").textContent.split(":")[1];
+
+    const values = {
+        idGrupo
+    }
+
+    try{
+        await fetch("/get-gastos",{
+            method:"GET",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify(values)
+        })
+        .then(res =>res.json())
+        .then(data =>{
+            if(!(res.ok)){
+                alert("Error Geteando gastos");
+                console.error("Error geteando gastos",data);
+            }
+            const divGastos = document.querySelector(".gastos");
+            divGastos.innerHTML = "";
+            data.resultado.forEach(gastos=>{
+                const gasto = document.createElement("div");
+                gasto.classList.add("gasto-ejemplo");
+
+                const idGasto = document.createElement("h3");
+                idGasto.id = "id-gasto";
+                idGasto.textContent = gastos.id;
+                gasto.appendChild(idGasto);
+
+                const titulo = document.createElement("h3");
+                titulo.id = "titulo-gasto"
+                titulo.textContent = gastos.motivo_gasto;
+                gasto.appendChild(titulo);
+
+                const grupo = document.createElement("h3");
+                grupo.id = "grupo-gasto"
+                grupo.textContent = `Grupo:${gastos.id_grupo}`;
+                gasto.appendChild(grupo);
+
+                const comprador = document.createElement("h3");
+                comprador.id = "comprador-gasto"
+                comprador.textContent = `Comprador:${gastos.id_usuario}`;
+                gasto.appendChild(comprador);
+
+                const plata = document.createElement("h3");
+                plata.id = "plata-gasto"
+                comprador.textContent = `Plata:${gastos.plata}$`;
+                gasto.appendChild(comprador);
+                
+                const pago = document.createElement("input");
+                pago.id = "pago-gasto"
+                pago.type = "checkbox";
+                gasto.appendChild(pago);
+
+                divGastos.appendChild(gasto);
+            });
+        })
+    }catch(err){
+        console.error("Error geteando gastos: ",err);
+    }
+})

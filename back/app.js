@@ -210,6 +210,19 @@ app.post("/nuevo-gasto",(req,res)=>{
 
 });
 
+// 📌 Ruta para get gastos por grupo
+
+app.get("/get-gastos",(req,res)=>{
+    const {idGrupo} = req.body;
+    const querry = `SELECT id, id_grupo, id_usuario, motivo_gasto, plata, pago FROM Gastos WHERE id_grupo = ?`;
+    db.query(querry,[idGrupo],(err,resultado)=>{
+        if(err){
+            return res.status(500).json({mensaje:`Error geteando gastos: ${err}`});
+        }
+        return res.status(200).json({resultado:resultado});
+    })
+})
+
 app.use(express.static(path.join(__dirname, "../public"))); 
 
 // 📌 Ajustar el puerto para que use el de Railway
