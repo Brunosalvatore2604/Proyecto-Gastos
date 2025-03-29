@@ -291,7 +291,7 @@ document.addEventListener("click",async e =>{
 
 });
 
-document.addEventListener("submit",async e =>{
+document.addEventListener("click",async e =>{
     e.preventDefault();
 
     const target = e.target;
