@@ -296,11 +296,10 @@ document.addEventListener("click",async e =>{
 
     const target = e.target;
     if(!(target.id=="agregar-gasto")){
-        console.log("1");
         return;
     }
 
-    console.log("2");
+    const divGasto = target.closest("div");
     const form = target.closest("form");
     const idGrupo = target.closest("div").querySelector("#grupo-id").textContent.split(":")[1];
     const idUsuario = form.querySelector("#input-comprador").value;
@@ -328,6 +327,7 @@ document.addEventListener("click",async e =>{
 
         if(respuesta.ok){
             alert("Gasto agregado correctamente");
+            divGasto.remove();
         }else{
             alert("Error Creando gasto");
             console.error("Error creando gasto: ",data.mensaje);
@@ -337,3 +337,12 @@ document.addEventListener("click",async e =>{
         console.error("Error creando gasto: ",err);
     }
 })
+
+document.addEventListener("click", e=>{
+    e.preventDefault();
+
+    if(!(e.target.id=="cancelar-gasto")){
+        return;
+    }
+    e.target.closest("div").remove();
+});
