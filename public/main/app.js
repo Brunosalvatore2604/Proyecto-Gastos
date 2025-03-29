@@ -302,7 +302,7 @@ document.addEventListener("click",async e =>{
 
     console.log("2");
 
-    const idGrupo = target.querySelector("#grupo-id").textContent.split(":")[1];
+    const idGrupo = target.closest("div").querySelector("#grupo-id").split(":")[1];
     const idUsuario = target.querySelector("#input-comprador").value;
     const motivo = target.querySelector("#input-motivo").value;
     const dinero = target.querySelector("#input-dinero").value;
