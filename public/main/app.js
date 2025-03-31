@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
 
 });
 
+
 document.getElementById("form-group-creation").addEventListener("submit", async (e)=>{
     e.preventDefault();
 
@@ -154,6 +155,7 @@ document.getElementById("form-group-creation").addEventListener("submit", async 
 
 })
 
+//     Agregar Integrante
 document.addEventListener("submit",async event =>{
 
     event.preventDefault();
@@ -200,6 +202,7 @@ document.addEventListener("submit",async event =>{
     }
 });
 
+//     Agregar gasto
 document.addEventListener("click",async e =>{
 
     e.preventDefault();
@@ -291,6 +294,7 @@ document.addEventListener("click",async e =>{
 
 });
 
+// Agregar Gasto
 document.addEventListener("click",async e =>{
     e.preventDefault();
 
@@ -347,11 +351,18 @@ document.addEventListener("click", e=>{
     e.target.closest("div").remove();
 });
 
+// Getar Gastos por Grupo
 document.addEventListener("click", async e => {
+
+    if(e.target.id == "gasto-nuevo"){
+        return;
+    }
+
     const div = e.target.closest("div");
     if(!(div.classList=="group-eje")){
         return;
     }
+    
 
     const idGrupo = div.querySelector("#idGrupo").textContent.split(":")[1];
 
