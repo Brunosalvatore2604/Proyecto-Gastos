@@ -257,12 +257,12 @@ app.post("/get-gastos",(req,res)=>{
 
 app.post("/pago-gasto",(req,res)=>{
     const {idu,idGasto} = req.body;
+    console.log("idu: ",idu,"idgasto: ",idGasto)
     const checkquerry = `SELECT esta_pago FROM Pago WHERE id_gasto = ? AND id_usuario = ?`;
     db.query(checkquerry,[idGasto,idu],(err,result)=>{
         if(err){
             return res.status(500).json({mensaje:`Error comprobando si esta pago: ${err}`});
         }
-        console.log(result[0].esta_pago);
         if(result.length >0 && result[0].esta_pago){
             return res.status(400).json({mensaje:"Este Usuario ya pago"});
         }
