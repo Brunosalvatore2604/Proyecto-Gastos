@@ -470,10 +470,10 @@ document.addEventListener("click",async e=>{
             window.location.href = "/index.html";
             return;
         }
-    id = payload.id;
+    const idu = payload.id;
     const idGasto = e.target.closest("div").querySelector("#id-gasto").textContent.split(":")[1];
     const id = {
-        id,
+        idu,
         idGasto
     };    
 

@@ -246,10 +246,10 @@ app.post("/get-gastos",(req,res)=>{
 // 📌 Ruta para pagar gastos
 
 app.post("/pago-gasto",(req,res)=>{
-    const {id,idGasto} = req.body;
+    const {idu,idGasto} = req.body;
 
     const updateQuerry = `UPDATE Pago SET esta_pago = TRUE WHERE id_usuario = ? AND id_gasto = ?`;
-    db.query(updateQuerry,[id,idGasto],(err,res)=>{
+    db.query(updateQuerry,[idu,idGasto],(err,res)=>{
         if(err){
             return res.status(500).json({mensaje:`Error Pagando: ${err}`});
         }
