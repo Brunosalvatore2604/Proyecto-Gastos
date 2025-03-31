@@ -229,7 +229,7 @@ app.post("/nuevo-gasto",(req,res)=>{
 // 📌 Ruta para get gastos por grupo
 
 app.post("/get-gastos",(req,res)=>{
-    const {idGrupo} = req.body;
+    const {idGrupo,id} = req.body;
     const querry = `SELECT id, id_grupo, id_usuario, motivo_gasto, plata, pago FROM Gastos WHERE id_grupo = ?`;
     db.query(querry,[idGrupo],(err,resultado)=>{
         if(err){
@@ -239,6 +239,16 @@ app.post("/get-gastos",(req,res)=>{
             return res.status(404).json({mensaje:`No hay gastos para este grupo`});
         }
         return res.status(200).json({resultado:resultado});
+        /*
+        const querryPagados = `SELECT id_gasto FROM Pago WHERE id_gasto = ? and id_usuario = ?`
+        resultado.forEach(data=>{
+            db.query(querryPagados,[data.id,id],(err,resultado2)=>{
+                if(err){
+                    return res.status(500).json({mensaje:`Error seleccionando gastos: ${err}`});
+                }
+            })
+        })
+       */
     })
 });
 
@@ -247,9 +257,17 @@ app.post("/get-gastos",(req,res)=>{
 
 app.post("/pago-gasto",(req,res)=>{
     const {idu,idGasto} = req.body;
-
+    const checkquerry = `SELECT esta_pago FROM Pago WHERE id_gasto = ? AND idu = ?`;
+    db.query(checkquerry,[idGasto,idu],(err,result)=>{
+        if(err){
+            return res.status(500).json({mensaje:`Error comprobando si esta pago: ${err}`});
+        }
+        if(result.esta_pago == "TRUE"){
+            return res.status(400).json({mensaje:"Este Usuario ya pago"});
+        }
+    })
     const updateQuerry = `UPDATE Pago SET esta_pago = TRUE WHERE id_usuario = ? AND id_gasto = ?`;
-    db.query(updateQuerry,[idu,idGasto],(err,res)=>{
+    db.query(updateQuerry,[idu,idGasto],(err,result)=>{
         if(err){
             return res.status(500).json({mensaje:`Error Pagando: ${err}`});
         }

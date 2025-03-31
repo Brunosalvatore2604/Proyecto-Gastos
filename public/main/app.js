@@ -372,9 +372,13 @@ document.addEventListener("click", async e => {
     
 
     const idGrupo = div.querySelector("#idGrupo").textContent.split(":")[1];
-
+    const token = localStorage.getItem("token");
+    const payload64 = token.split(".")[1];
+    const payload = JSON.parse(atob(payload64));
+    const id = payload.id
     const values = {
-        idGrupo
+        idGrupo,
+        id
     }
 
     try{
@@ -426,10 +430,6 @@ document.addEventListener("click", async e => {
                 comprador.textContent = `Plata:${gastos.plata}$`;
                 gasto.appendChild(comprador);
                 
-                const token = localStorage.getItem("token");
-                const payload64 = token.split(".")[1];
-                const payload = JSON.parse(atob(payload64));
-                id = payload.id;
                 if(!(id==gastos.id_usuario)){
                     const textoPago = document.createElement("h3");
                     comprador.textContent = `¿Pago?:`;
