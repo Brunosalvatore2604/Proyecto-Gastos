@@ -1,5 +1,6 @@
 //--------- CARGAR COSAS DEL USUARIO -------------------
 
+
 document.addEventListener("DOMContentLoaded", async()=> {
     
     const token = localStorage.getItem("token");
@@ -425,19 +426,73 @@ document.addEventListener("click", async e => {
                 comprador.textContent = `Plata:${gastos.plata}$`;
                 gasto.appendChild(comprador);
                 
-                const textoPago = document.createElement("h3");
-                comprador.textContent = `¿Pago?:`;
-                gasto.appendChild(textoPago);
+                const payload64 = token.split(".")[1];
+                const payload = JSON.parse(atob(payload64));
+                id = payload.id;
+                if(!(id==gastos.id_usuario)){
+                    const textoPago = document.createElement("h3");
+                    comprador.textContent = `¿Pago?:`;
+                    gasto.appendChild(textoPago);
 
-                const pago = document.createElement("input");
-                pago.id = "pago-gasto"
-                pago.type = "checkbox";
-                gasto.appendChild(pago);
-
+                    const pago = document.createElement("button");
+                    pago.id = "pago-gasto"
+                    pago.textContent= "Pague";
+                    gasto.appendChild(pago);
+                }
                 divGastos.appendChild(gasto);
             });
         })
     }catch(err){
         console.error("Error geteando gastos: ",err);
     }
-})
+});
+
+document.addEventListener("click",async e=>{
+    e.preventDefault();
+
+    if(!(e.target.id=="pago-gasto")){
+        return;
+    }
+
+    const token = localStorage.getItem("token");
+    if(!token){
+        alert("Error no token");
+        return;
+    }
+
+    const payload64 = token.split(".")[1];
+    const payload = JSON.parse(atob(payload64));
+    const isExpired = (payload.exp *1000) < Date.now();
+        if(isExpired){
+            console.error("Token expirado");
+            localStorage.removeItem("token");
+            window.location.href = "/index.html";
+            return;
+        }
+    id = payload.id;
+    const idGasto = e.target.closest("div").querySelector("#id-gasto").textContent.split(":")[1];
+    const id = {
+        id,
+        idGasto
+    };    
+
+    try{
+        const respuesta = await fetch("/pago-gasto",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify(id)
+        })
+    
+        const data = await respuesta.json();
+        if(respuesta.ok){
+            alert("Pago Realizado");
+            console.log(data.mensaje);
+            return;
+        }
+        alert("Error Realizando Pago");
+        console.error(data.mensaje);
+    }catch(err){
+        console.error("Error realizando Pago: ",err);
+    }
+
+});
