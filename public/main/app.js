@@ -354,7 +354,7 @@ document.addEventListener("click", e=>{
 // Getar Gastos por Grupo
 document.addEventListener("click", async e => {
 
-    if(e.target.id == "nuevo-gasto"){
+    if(e.target.classList == "nuevo-gasto"){
         return;
     }
 
