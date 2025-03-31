@@ -38,11 +38,31 @@ const db = mysql.createConnection({
 
 // Conectar a la base de datos
 db.connect(err => {
+
     if (err) {
         console.error("Error al conectar:", err);
         return;
     }
+
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
+
+    const tablaPago = `CREATE TABLE IF NOT EXISTS Pago (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        id_gasto INT,
+        id_usuario INT,
+        esta_pago BOOLEAN DEFAULT FALSE,
+        FOREIGN KEY (id_gasto) REFERENCES Gastos(id) ON DELETE CASCADE,
+        FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) ON DELETE CASCADE
+    );`;
+    db.query(tablaPago,(err,res)=>{
+        if(err){
+            console.log("Error Creando la Tbala XDDDDDD");
+        }
+        else{
+            console.log("TABLA CREADA CORRECTAMENTE");
+        }
+    });
+    
     });
 
 
@@ -204,10 +224,22 @@ app.post("/nuevo-gasto",(req,res)=>{
         if(err){
             return res.status(500).json({mensaje: `Error insertando gasto: ${err}`});
         }
-        return res.status(201).json({mensaje:"Gasto agregado correctamente"});
     })
-
-
+    const selectUsuarios = `SELECT id_usuario FROM Usuarios_Grupos WHERE id_grupo = ?`;
+    db.query(selectUsuarios,[idGrupo],(err,results)=>{
+        if(err){
+            return res.status(500).json({mensaje:`Error Seleccionando usuarios ${err}`});
+        }
+        results.forEach(usuario =>{
+            const insertQuerry2 = `INSERT INTO Pago (id_gasto, id_usuario,) VALUES (?, ?)`;
+            db.query(insertQuerry2,[usuario.id_usuario],(err,results)=>{
+                if(err){
+                    return res.status(500).json({mensaje:`Error agregando a pago usuario: ${usuario.id_usuario}`});
+                }
+            })
+        })
+    })
+    return res.status(200).json({mensaje:"Gasto agregado correctamente"});
 });
 
 // 📌 Ruta para get gastos por grupo
