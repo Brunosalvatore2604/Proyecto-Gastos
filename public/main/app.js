@@ -426,6 +426,7 @@ document.addEventListener("click", async e => {
                 comprador.textContent = `Plata:${gastos.plata}$`;
                 gasto.appendChild(comprador);
                 
+                const token = localStorage.getItem("token");
                 const payload64 = token.split(".")[1];
                 const payload = JSON.parse(atob(payload64));
                 id = payload.id;
