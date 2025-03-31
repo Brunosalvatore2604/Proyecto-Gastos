@@ -46,23 +46,6 @@ db.connect(err => {
 
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
-    const tablaPago = `CREATE TABLE IF NOT EXISTS Pago (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        id_gasto INT,
-        id_usuario INT,
-        esta_pago BOOLEAN DEFAULT FALSE,
-        FOREIGN KEY (id_gasto) REFERENCES Gastos(id) ON DELETE CASCADE,
-        FOREIGN KEY (id_usuario) REFERENCES Usuarios(id) ON DELETE CASCADE
-    );`;
-    db.query(tablaPago,(err,res)=>{
-        if(err){
-            console.log("Error Creando la Tbala XDDDDDD");
-        }
-        else{
-            console.log("TABLA CREADA CORRECTAMENTE");
-        }
-    });
-    
     });
 
 
@@ -206,11 +189,12 @@ app.post("/agregarIntegrante",(req,res)=>{
 });
 
 // 📌 Ruta para get grupos por usuario
+
 app.post("/nuevo-gasto",(req,res)=>{
     const {idGrupo,idUsuario,motivo,dinero,fecha} = req.body;
 
-    const checkUsuario = `SELECT * FROM Usuarios WHERE id = ?`;
-    db.query(checkUsuario,[idUsuario],(err,res)=>{
+    const checkUsuario = `SELECT * FROM Usuarios_Grupos WHERE id_usuario = ? AND id_grupo = ?`;
+    db.query(checkUsuario,[idUsuario,idGrupo],(err,res)=>{
         if(err){
             return res.status(500).json({mensaje:`Error creando Gasto: ${err}`});
         }
@@ -261,6 +245,7 @@ app.post("/get-gastos",(req,res)=>{
 app.use(express.static(path.join(__dirname, "../public"))); 
 
 // 📌 Ajustar el puerto para que use el de Railway
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`🚀 Servidor escuchando en el puerto ${PORT}`);

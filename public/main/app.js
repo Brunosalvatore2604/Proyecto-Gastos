@@ -1,3 +1,4 @@
+//--------- CARGAR COSAS DEL USUARIO -------------------
 
 document.addEventListener("DOMContentLoaded", async()=> {
     
@@ -103,6 +104,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
 
 });
 
+// ----------- CREACION DE GRUPO/API ---------------
 
 document.getElementById("form-group-creation").addEventListener("submit", async (e)=>{
     e.preventDefault();
@@ -155,7 +157,8 @@ document.getElementById("form-group-creation").addEventListener("submit", async 
 
 })
 
-//     Agregar Integrante
+//------------ AGREGAR INTEGRANTE/FRONT ----------------
+
 document.addEventListener("submit",async event =>{
 
     event.preventDefault();
@@ -202,7 +205,8 @@ document.addEventListener("submit",async event =>{
     }
 });
 
-//     Agregar gasto
+//------------- AGREGAR GASTO/FRONT ----------------
+
 document.addEventListener("click",async e =>{
 
     e.preventDefault();
@@ -294,7 +298,8 @@ document.addEventListener("click",async e =>{
 
 });
 
-// Agregar Gasto
+//------------ AGREGAR GASTO/API --------------
+
 document.addEventListener("click",async e =>{
     e.preventDefault();
 
@@ -351,7 +356,8 @@ document.addEventListener("click", e=>{
     e.target.closest("div").remove();
 });
 
-// Getar Gastos por Grupo
+//--------GETEAR GASTOS POR GRUPO/FRONT-------------------
+
 document.addEventListener("click", async e => {
 
     if(e.target.classList == "nuevo-gasto"){
@@ -379,6 +385,11 @@ document.addEventListener("click", async e => {
         .then(res =>res.json())
         .then(data =>{
             if(data.mensaje){
+                if(data.mensaje == "No hay gastos para este grupo"){
+                    const divGastos = document.querySelector(".gastos");
+                    divGastos.innerHTML= "";
+                    return;
+                }
                 alert("Error Geteando gastos");
                 console.error("Error geteando gastos",data);
                 return;
@@ -396,7 +407,7 @@ document.addEventListener("click", async e => {
 
                 const titulo = document.createElement("h3");
                 titulo.id = "titulo-gasto"
-                titulo.textContent = `Motivo gasto:${gastos.id}`
+                titulo.textContent = `Motivo gasto:${gastos.motivo_gasto}`
                 gasto.appendChild(titulo);
 
                 const grupo = document.createElement("h3");
