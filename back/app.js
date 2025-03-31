@@ -43,7 +43,7 @@ db.connect(err => {
         console.error("Error al conectar:", err);
         return;
     }
-
+    
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
     });
@@ -257,18 +257,18 @@ app.post("/get-gastos",(req,res)=>{
 
 app.post("/pago-gasto",(req,res)=>{
     const {idu,idGasto} = req.body;
-    console.log("idu: ",idu,"idgasto: ",idGasto)
+
     const checkquerry = `SELECT esta_pago FROM Pago WHERE id_gasto = ? AND id_usuario = ?`;
     db.query(checkquerry,[idGasto,idu],(err,result)=>{
         if(err){
             return res.status(500).json({mensaje:`Error comprobando si esta pago: ${err}`});
         }
-        if(result.length == 0){
+        if(result.length > 0 && result[0].esta_pago){
             return res.status(400).json({mensaje:"Este Usuario ya pago"});
         }
     })
     const updateQuerry = `UPDATE Pago SET esta_pago = TRUE WHERE id_usuario = ? AND id_gasto = ?`;
-    db.query(updateQuerry,[idu,idGasto],(err,result)=>{
+    db.query(updateQuerry,[idu, idGasto],(err,result)=>{
         if(err){
             return res.status(500).json({mensaje:`Error Pagando: ${err}`});
         }
