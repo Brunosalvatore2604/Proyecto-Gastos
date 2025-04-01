@@ -156,6 +156,9 @@ app.get("/main-getGrupos",(req,res)=>{
         if(err){
             return res.status(500).json({mensaje:"Error interno en consulta"});
         }
+        if(resultado.length == 0){
+            return res.status(400).json({mensaje:"No hay grupos"});
+        }
         return res.status(200).json({resultado:resultado});
         });
 });
