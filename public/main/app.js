@@ -114,8 +114,8 @@ document.addEventListener("click", async (e)=>{
         return;
     }
     console.log("Almenos aca andamos");
-    
-    const nombreGrupo = document.getElementById("nombre-grupo").value;
+    const formulario = document.querySelector("#form-group-creation");
+    const nombreGrupo = formulario.querySelector("nombre-grupo").value;
     const token = localStorage.getItem("token");
 
     if(!token){
