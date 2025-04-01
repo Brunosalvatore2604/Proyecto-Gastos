@@ -114,7 +114,7 @@ document.addEventListener("click", async (e)=>{
     if(!(e.target.id=="sub-grupo")){
         return;
     }
-    console.log("Almenos aca andamos");
+
     const formulario = e.target.closest("form");
     const nombreGrupo = formulario.querySelector("#nombre-grupo").value;
     const token = localStorage.getItem("token");
@@ -367,7 +367,7 @@ document.addEventListener("click", e=>{
 
 document.addEventListener("click", async e => {
 
-    if(e.target.classList == "nuevo-gasto"){
+    if(e.target.classList == "nuevo-gasto" || e.target.id=="submit-integrante"){
         return;
     }
 
