@@ -366,7 +366,7 @@ document.addEventListener("click", async e => {
     }
 
     const div = e.target.closest("div");
-    if(div && !(div.classList=="group-eje")){
+    if(!div || !(div.classList=="group-eje")){
         return;
     }
     
