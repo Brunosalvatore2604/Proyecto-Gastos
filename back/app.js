@@ -37,23 +37,20 @@ const db = mysql.createConnection({
 
 
 // Conectar a la base de datos
-db.connect(err => {
+db.connect(async err => {
 
     if (err) {
         console.error("Error al conectar:", err);
         return;
     }
-    const selectPagos = `SELECT * FROM Pago`;
-    db.query(selectPagos,(err,res)=>{
-        if(err){
-            console.log("Error en consulta a pagos");
-        }else{
-            res.forEach(data=>{
-                console.log(data);
-            })
-        }
+    db.query("SET FOREIGN_KEY_CHECKS = 0");
+    db.query("TRUNCATE TABLE Usuarios");
+    db.query("TRUNCATE TABLE Grupos");
+    db.query("TRUNCATE TABLE Usuarios_Grupos");
+    db.query("TRUNCATE TABLE Gastos");
+    db.query("TRUNCATE TABLE Pago")
+    db.query("SET FOREIGN_KEY_CHECKS = 1");
 
-    })
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
     });
