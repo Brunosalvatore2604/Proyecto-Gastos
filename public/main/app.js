@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
         .then(data =>{
             if(data.mensaje){
                 console.error("Error cargando los grupos: ",data.mensaje);
+                return;
             }
             const groupSelector = document.querySelector(".group-selector");
             groupSelector.innerHTML = "";
