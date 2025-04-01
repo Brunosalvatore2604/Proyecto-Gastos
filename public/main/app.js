@@ -109,13 +109,14 @@ document.addEventListener("DOMContentLoaded", async()=> {
 // ----------- CREACION DE GRUPO/API ---------------
 
 document.addEventListener("click", async (e)=>{
+
     e.preventDefault();
     if(!(e.target.id=="sub-grupo")){
         return;
     }
     console.log("Almenos aca andamos");
     const formulario = e.target.closest("form");
-    const nombreGrupo = formulario.querySelector("nombre-grupo").value;
+    const nombreGrupo = formulario.querySelector("#nombre-grupo").value;
     const token = localStorage.getItem("token");
 
     if(!token){
