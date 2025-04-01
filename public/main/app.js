@@ -172,7 +172,7 @@ document.addEventListener("click",async event =>{
     const target = event.target;
     const contenedor = target.closest("div");
 
-    if(!(contenedor.classList == "group-eje")){
+    if(!(event.target.id == "submit-integrante")){
         return;
     }
 
