@@ -454,6 +454,8 @@ document.addEventListener("click", async e => {
     }
 });
 
+//----------PAGO GASTO/API-------------------
+
 document.addEventListener("click",async e=>{
     e.preventDefault();
 
