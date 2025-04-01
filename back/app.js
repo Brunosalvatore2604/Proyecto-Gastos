@@ -43,7 +43,17 @@ db.connect(err => {
         console.error("Error al conectar:", err);
         return;
     }
-    
+    const selectPagos = `SELECT * FROM Pago`;
+    db.query(selectPagos,(err,res)=>{
+        if(err){
+            console.log("Error en consulta a pagos");
+        }else{
+            res.forEach(data=>{
+                console.log(data);
+            })
+        }
+
+    })
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
     });
