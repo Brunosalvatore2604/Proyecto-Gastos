@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
 
 document.getElementById("form-group-creation").addEventListener("submit", async (e)=>{
     e.preventDefault();
-
+    console.log("Almenos aca andamos");
     const nombreGrupo = document.getElementById("nombre-grupo").value;
     const token = localStorage.getItem("token");
 

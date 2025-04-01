@@ -113,7 +113,7 @@ app.post("/register", (req, res) => {
 // 📌 Ruta para crear grupo
 app.post("/crearGrupo",(req,res)=>{
     const {nombreGrupo,idCreador} = req.body;
-
+    console.log("llego a la api");
     if (!nombreGrupo || !idCreador) {
         return res.status(400).json({ mensaje: "Faltan datos: nombreGrupo o idCreador" });
     }
@@ -162,7 +162,6 @@ app.get("/main-getGrupos",(req,res)=>{
         if(err){
             return res.status(500).json({mensaje:"Error interno en consulta"});
         }
-        console.log(resultado);
         return res.status(200).json({resultado:resultado});
         });
 });
