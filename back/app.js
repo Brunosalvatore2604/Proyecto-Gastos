@@ -194,11 +194,11 @@ app.post("/nuevo-gasto",(req,res)=>{
     const {idGrupo,idUsuario,motivo,dinero,fecha} = req.body;
 
     const checkUsuario = `SELECT * FROM Usuarios_Grupos WHERE id_usuario = ? AND id_grupo = ?`;
-    db.query(checkUsuario,[idUsuario,idGrupo],(err,res)=>{
+    db.query(checkUsuario,[idUsuario,idGrupo],(err,result)=>{
         if(err){
             return res.status(500).json({mensaje:`Error creando Gasto: ${err}`});
         }
-        if(res.length==0){
+        if(result.length==0){
             return res.status(400).json({mensaje:`Error ese usuario no existe`});
         }
     });
@@ -208,21 +208,23 @@ app.post("/nuevo-gasto",(req,res)=>{
         if(err){
             return res.status(500).json({mensaje: `Error insertando gasto: ${err}`});
         }
-    })
-    const selectUsuarios = `SELECT id_usuario FROM Usuarios_Grupos WHERE id_grupo = ?`;
-    db.query(selectUsuarios,[idGrupo],(err,results)=>{
-        if(err){
-            return res.status(500).json({mensaje:`Error Seleccionando usuarios ${err}`});
-        }
-        results.forEach(usuario =>{
-            const insertQuerry2 = `INSERT INTO Pago (id_gasto, id_usuario,) VALUES (?, ?)`;
-            db.query(insertQuerry2,[usuario.id_usuario],(err,results)=>{
-                if(err){
-                    return res.status(500).json({mensaje:`Error agregando a pago usuario: ${usuario.id_usuario}`});
-                }
-            })
-        })
-    })
+        const idGasto = results.insertId;
+
+        const selectUsuarios = `SELECT id_usuario FROM Usuarios_Grupos WHERE id_grupo = ?`;
+        db.query(selectUsuarios,[idGrupo],(err,results)=>{
+            if(err){
+                return res.status(500).json({mensaje:`Error Seleccionando usuarios ${err}`});
+            }
+            results.forEach(usuario =>{
+                const insertQuerry2 = `INSERT INTO Pago (id_gasto, id_usuario,) VALUES (?, ?)`;
+                db.query(insertQuerry2,[idGasto,usuario.id_usuario],(err,results)=>{
+                    if(err){
+                        return res.status(500).json({mensaje:`Error agregando a pago usuario: ${usuario.id_usuario}`});
+                    }
+                });
+            });
+        });
+    });
     return res.status(200).json({mensaje:"Gasto agregado correctamente"});
 });
 
@@ -249,7 +251,7 @@ app.post("/get-gastos",(req,res)=>{
             })
         })
        */
-    })
+    });
 });
 
 
