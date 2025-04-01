@@ -166,7 +166,7 @@ document.addEventListener("click", async (e)=>{
 
 //------------ AGREGAR INTEGRANTE/FRONT ----------------
 
-document.addEventListener("submit",async event =>{
+document.addEventListener("click",async event =>{
 
     event.preventDefault();
     const target = event.target;
