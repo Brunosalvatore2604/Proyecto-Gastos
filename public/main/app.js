@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
 
 document.addEventListener("submit", async (e)=>{
     e.preventDefault();
-    if(!(e.target.id="sub-grupo")){
+    if(!(e.target.id=="sub-grupo")){
         return;
     }
     console.log("Almenos aca andamos");
