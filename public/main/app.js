@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
 
 // ----------- CREACION DE GRUPO/API ---------------
 
-document.addEventListener("submit", async (e)=>{
+document.addEventListener("click", async (e)=>{
     e.preventDefault();
     if(!(e.target.id=="sub-grupo")){
         return;
