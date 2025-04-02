@@ -219,6 +219,7 @@ app.post("/nuevo-gasto",(req,res)=>{
                 return res.status(500).json({mensaje:`Error Seleccionando usuarios ${err}`});
             }
             results.forEach(usuario =>{
+                console.log("idgasto: ",idGasto,"usuario:",usuario.id_usuario);
                 const insertQuerry2 = `INSERT INTO Pago (id_gasto, id_usuario,) VALUES (?, ?)`;
                 db.query(insertQuerry2,[idGasto,usuario.id_usuario],(err,results)=>{
                     if(err){
@@ -268,6 +269,7 @@ app.post("/pago-gasto",(req,res)=>{
         if(err){
             return res.status(500).json({mensaje:`Error comprobando si esta pago: ${err}`});
         }
+        console.log("largo: ",result.length,"result: ",result,"result data: ",result[0]);
         if(result.length > 0 && result[0].esta_pago == "TRUE"){
             return res.status(400).json({mensaje:"Este Usuario ya pago"});
         }
