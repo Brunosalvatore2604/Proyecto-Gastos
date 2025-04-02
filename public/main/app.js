@@ -434,7 +434,7 @@ document.addEventListener("click", async e => {
                 const plata = document.createElement("h3");
                 plata.id = "plata-gasto"
                 comprador.textContent = `Plata:${gastos.plata}$`;
-                gasto.appendChild(comprador);
+                gasto.appendChild(plata);
                 
                 if(!(id==gastos.id_usuario)){
                     const textoPago = document.createElement("h3");

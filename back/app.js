@@ -204,46 +204,62 @@ app.post("/agregarIntegrante",(req,res)=>{
 
 });
 
-// 📌 Ruta para get grupos por usuario
+// 📌 Ruta para nuevo gasto
 
-app.post("/nuevo-gasto",(req,res)=>{
-    const {idGrupo,idUsuario,motivo,dinero,fecha} = req.body;
+app.post("/nuevo-gasto", (req, res) => {
+    const { idGrupo, idUsuario, motivo, dinero, fecha } = req.body;
 
     const checkUsuario = `SELECT * FROM Usuarios_Grupos WHERE id_usuario = ? AND id_grupo = ?`;
-    db.query(checkUsuario,[idUsuario,idGrupo],(err,result)=>{
-        if(err){
-            return res.status(500).json({mensaje:`Error creando Gasto: ${err}`});
+    db.query(checkUsuario, [idUsuario, idGrupo], (err, result) => {
+        if (err) {
+            return res.status(500).json({ mensaje: `Error verificando usuario: ${err}` });
         }
-        if(result.length==0){
-            return res.status(400).json({mensaje:`Error ese usuario no existe`});
+        if (result.length === 0) {
+            return res.status(400).json({ mensaje: `Error: ese usuario no existe` });
         }
-    });
 
-    const insertQuerry = `INSERT INTO Gastos (id_grupo, id_usuario, motivo_gasto, plata) VALUES (?, ?, ?, ?)`;
-    db.query(insertQuerry,[idGrupo,idUsuario,motivo,dinero],(err,results)=>{
-        if(err){
-            return res.status(500).json({mensaje: `Error insertando gasto: ${err}`});
-        }
-        const idGasto = results.insertId;
-
-        const selectUsuarios = `SELECT id_usuario FROM Usuarios_Grupos WHERE id_grupo = ?`;
-        db.query(selectUsuarios,[idGrupo],(err,results)=>{
-            if(err){
-                return res.status(500).json({mensaje:`Error Seleccionando usuarios ${err}`});
+        // Insertar el gasto solo si el usuario es válido
+        const insertQuerry = `INSERT INTO Gastos (id_grupo, id_usuario, motivo_gasto, plata) VALUES (?, ?, ?, ?)`;
+        db.query(insertQuerry, [idGrupo, idUsuario, motivo, dinero], (err, results) => {
+            if (err) {
+                return res.status(500).json({ mensaje: `Error insertando gasto: ${err}` });
             }
-            const insertQuerry2 = `INSERT INTO Pago (id_gasto, id_usuario,) VALUES (?, ?)`;
-            results.forEach(usuario =>{
-                console.log("idgasto: ",idGasto,"usuario:",usuario.id_usuario);
-                db.query(insertQuerry2,[idGasto, usuario.id_usuario],(err,results)=>{
-                    if(err){
-                        return res.status(500).json({mensaje:`Error agregando a pago usuario: ${usuario.id_usuario}`});
-                    }
+            const idGasto = results.insertId;
+
+            // Seleccionar los usuarios del grupo
+            const selectUsuarios = `SELECT id_usuario FROM Usuarios_Grupos WHERE id_grupo = ?`;
+            db.query(selectUsuarios, [idGrupo], (err, results) => {
+                if (err) {
+                    return res.status(500).json({ mensaje: `Error seleccionando usuarios: ${err}` });
+                }
+
+                // Insertar en "Pago" para cada usuario
+                const insertQuerry2 = `INSERT INTO Pago (id_gasto, id_usuario) VALUES (?, ?)`;
+                const promises = results.map(usuario => {
+                    return new Promise((resolve, reject) => {
+                        db.query(insertQuerry2, [idGasto, usuario.id_usuario], (err) => {
+                            if (err) {
+                                reject(`Error agregando a pago usuario: ${usuario.id_usuario}`);
+                            } else {
+                                resolve();
+                            }
+                        });
+                    });
                 });
+
+                // Ejecutar todas las inserciones y responder solo una vez
+                Promise.all(promises)
+                    .then(() => {
+                        res.status(200).json({ mensaje: "Gasto agregado correctamente" });
+                    })
+                    .catch(error => {
+                        res.status(500).json({ mensaje: error });
+                    });
             });
         });
     });
-    return res.status(200).json({mensaje:"Gasto agregado correctamente"});
 });
+
 
 // 📌 Ruta para get gastos por grupo
 
