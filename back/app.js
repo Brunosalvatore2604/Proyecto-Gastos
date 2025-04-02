@@ -44,7 +44,20 @@ db.connect(async err => {
         return;
     }
  
+    const tableName = 'Pago';
 
+    db.query(
+    `SELECT COUNT(*) AS count FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?`,
+    ['gastos_app', tableName],
+    (err, results) => {
+        if (err) throw err;
+        if (results[0].count > 0) {
+        console.log(`La tabla "${tableName}" existe.`);
+        } else {
+        console.log(`La tabla "${tableName}" no existe.`);
+        }
+    }
+);
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
     });
@@ -218,10 +231,10 @@ app.post("/nuevo-gasto",(req,res)=>{
             if(err){
                 return res.status(500).json({mensaje:`Error Seleccionando usuarios ${err}`});
             }
+            const insertQuerry2 = `INSERT INTO Pago (id_gasto, id_usuario,) VALUES (?, ?)`;
             results.forEach(usuario =>{
                 console.log("idgasto: ",idGasto,"usuario:",usuario.id_usuario);
-                const insertQuerry2 = `INSERT INTO Pago (id_gasto, id_usuario,) VALUES (?, ?)`;
-                db.query(insertQuerry2,[idGasto,usuario.id_usuario],(err,results)=>{
+                db.query(insertQuerry2,[idGasto, usuario.id_usuario],(err,results)=>{
                     if(err){
                         return res.status(500).json({mensaje:`Error agregando a pago usuario: ${usuario.id_usuario}`});
                     }
