@@ -299,7 +299,7 @@ app.post("/pago-gasto",(req,res)=>{
             return res.status(500).json({mensaje:`Error comprobando si esta pago: ${err}`});
         }
         console.log("largo: ",result.length,"result: ",result,"result data: ",result[0]);
-        if(result.length > 0 && result[0].esta_pago == "TRUE"){
+        if(result.length > 0 && result[0].esta_pago == 1){
             return res.status(400).json({mensaje:"Este Usuario ya pago"});
         }
     })
