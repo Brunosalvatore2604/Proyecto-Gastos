@@ -294,7 +294,7 @@ app.post("/get-gastos",(req,res)=>{
 
 app.post("/pago-gasto",(req,res)=>{
     const {idu,idGasto} = req.body;
-    const estaPago =1;
+    var estaPago =1;
     //Chequear si usuario ya pago
     const checkquerry = `SELECT esta_pago FROM Pago WHERE id_gasto = ? AND id_usuario = ?`;
     db.query(checkquerry,[idGasto,idu],(err,result)=>{
