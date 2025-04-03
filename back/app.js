@@ -252,7 +252,7 @@ app.post("/nuevo-gasto", (req, res) => {
                 // Ejecutar todas las inserciones y responder solo una vez
                 Promise.all(promises)
                     .then(() => {
-                        db.query(`UPDATE Pago SET esta_pago = TRUE WHERE id_usuario = ? AND id = ?`,[idUsuario,idGasto],(err,res)=>{
+                        db.query(`UPDATE Pago SET esta_pago = TRUE WHERE id_usuario = ? AND id = ?`,[idUsuario,idGasto],(err,results)=>{
                             if(err){
                                 return res.status(200).json({mensaje: "gasto agregado correctamente pero comprador no"});
                             }else{
@@ -323,7 +323,7 @@ app.post("/pago-gasto",(req,res)=>{
                             if(err){
                                 return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago 2"});
                             }
-                            console.log(result[0].esta_Pago);
+                            console.log("resultado:",result[0],"resultado:",result,"resultadoID:",result.id);
                             if(result.length > 0 && result[0].esta_pago == 0){
                                 estaPago = 0;
                             }
