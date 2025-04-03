@@ -242,15 +242,6 @@ app.post("/nuevo-gasto", (req, res) => {
                         db.query(insertQuerry2, [idGasto, usuario.id_usuario], (err) => {
                             if (err) {
                                 reject(`Error agregando a pago usuario: ${usuario.id_usuario}`);
-                            } else if(usuario.id_usuario == idUsuario){
-                                db.query(`UPDATE Pago SET esta_pago = TRUE WHERE id_usuario = ? AND id = ?`,[usuario.idUsuario,idGasto],(err,res)=>{
-                                    if(err){
-                                        reject(`Error agregando a pago usuario comprador: ${usuario.idUsuario}`);
-                                    }
-                                    else{
-                                        resolve();
-                                    }
-                                })
                             }else{
                                 resolve();
                             }
@@ -261,7 +252,14 @@ app.post("/nuevo-gasto", (req, res) => {
                 // Ejecutar todas las inserciones y responder solo una vez
                 Promise.all(promises)
                     .then(() => {
-                        res.status(200).json({ mensaje: "Gasto agregado correctamente" });
+                        db.query(`UPDATE Pago SET esta_pago = TRUE WHERE id_usuario = ? AND id = ?`,[idUsuario,idGasto],(err,res)=>{
+                            if(err){
+                                return res.status(200).json({mensaje: "gasto agregado correctamente pero comprador no"});
+                            }else{
+                                res.status(200).json({ mensaje: "Gasto agregado correctamente y comprador tambien" });
+                            }
+                        })
+                        
                     })
                     .catch(error => {
                         res.status(500).json({ mensaje: error });
@@ -324,11 +322,12 @@ app.post("/pago-gasto",(req,res)=>{
                             if(err){
                                 return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago 2"});
                             }
+                            console.log(result[0].esta_Pago);
                             if(result.length > 0 && result[0].esta_pago == 0){
                                 estaPago = 0;
                             }
-                        })
-                    })
+                        });
+                    });
                     if(estaPago==1){
                         const updatePago = `UPDATE Gastos SET pago = TRUE WHERE id = ?`;
                         db.query(updatePago,[idGasto],(err,result)=>{
