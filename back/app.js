@@ -1,3 +1,5 @@
+//ARREGLAR EL TEMA DE QUE SI EL LOCO ES EL PAGADOR SE PONGA EN TRUE SU TABLA CON Pago
+
 const express = require("express"); //alt 96 ``
 const app = express();
 const path = require("path");
@@ -240,7 +242,16 @@ app.post("/nuevo-gasto", (req, res) => {
                         db.query(insertQuerry2, [idGasto, usuario.id_usuario], (err) => {
                             if (err) {
                                 reject(`Error agregando a pago usuario: ${usuario.id_usuario}`);
-                            } else {
+                            } else if(usuario.id_usuario == idUsuario){
+                                db.query(`UPDATE Pago SET esta_pago = TRUE WHERE id_usuario = ? AND id = ?`,[usuario.idUsuario,idGasto],(err,res)=>{
+                                    if(err){
+                                        reject(`Error agregando a pago usuario comprador: ${usuario.idUsuario}`);
+                                    }
+                                    else{
+                                        resolve();
+                                    }
+                                })
+                            }else{
                                 resolve();
                             }
                         });
