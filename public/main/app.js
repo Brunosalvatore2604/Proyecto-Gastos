@@ -434,7 +434,7 @@ document.addEventListener("click", async e => {
 
                 const plata = document.createElement("h3");
                 plata.id = "plata-gasto"
-                plata.textContent = `Plata:${gastos.plata}$`;
+                plata.textContent = `Plata:${gastos.plata}`;
                 gasto.appendChild(plata);
                 
                 if(!(id==gastos.id_usuario)){

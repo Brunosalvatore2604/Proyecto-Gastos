@@ -154,6 +154,14 @@ main{
     width: 25px;
 }
 
+.gasto-ejemplo img{
+    position: absolute;
+    height: 150px;
+    width: 250px;
+    contain: content;
+    pointer-events: none;
+}
+
 .group-selector{
     display: flex;
     flex-direction: column;
