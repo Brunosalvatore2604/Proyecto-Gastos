@@ -323,8 +323,8 @@ app.post("/pago-gasto",(req,res)=>{
                             if(err){
                                 return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago 2"});
                             }
-                            console.log("resultado:",result[0],"resultado:",result,"resultadoID:",result.id);
-                            if(result.length > 0 && result[0].esta_pago == 0){
+                            console.log("resultado:",result[0],"resultado:",result,"resultadoID:",result.esta_pago,"resultadoid2:",result[0].esta_pago);
+                            if(result.length > 0 && result[0] == 0){
                                 estaPago = 0;
                             }
                         });
