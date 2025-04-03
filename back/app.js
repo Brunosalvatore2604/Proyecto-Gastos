@@ -291,8 +291,8 @@ app.post("/get-gastos",(req,res)=>{
 // 📌 Ruta para pagar gastos
 
 app.post("/pago-gasto",(req,res)=>{
-    const {idu,idGasto} = req.body;
     var estaPago =1;
+    const {idu,idGasto} = req.body;
     //Chequear si usuario ya pago
     const checkquerry = `SELECT esta_pago FROM Pago WHERE id_gasto = ? AND id_usuario = ?`;
     db.query(checkquerry,[idGasto,idu],(err,result)=>{
@@ -312,13 +312,14 @@ app.post("/pago-gasto",(req,res)=>{
             }else{
                 //Update hecho, verificando si ya pagaron todo
                 const checkPago = `SELECT id FROM Pago WHERE id_gasto = ?`;
-                db.query(checkPago,[idGasto],(err,result)=>{
+                db.query(checkPago,[idGasto],async(err,result)=>{
                     if(err){
                         return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago 1"});
                     }
                     console.log("id pagos: ",result);
+                    
                     const checkPago2 = `SELECT esta_pago FROM Pago WHERE id = ?`;
-                    result.forEach(pagos=>{
+                    await result.forEach(pagos=>{
                         db.query(checkPago2,[pagos.id],(err,result)=>{
                             if(err){
                                 return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago 2"});
