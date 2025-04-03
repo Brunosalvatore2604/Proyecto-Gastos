@@ -408,6 +408,7 @@ document.addEventListener("click", async e => {
             const divGastos = document.querySelector(".gastos");
             divGastos.innerHTML = "";
             data.resultado.forEach(gastos=>{
+                
                 const gasto = document.createElement("div");
                 gasto.classList.add("gasto-ejemplo");
 
@@ -445,6 +446,12 @@ document.addEventListener("click", async e => {
                     pago.id = "pago-gasto"
                     pago.textContent= "Pague";
                     gasto.appendChild(pago);
+                }
+                if(gastos.pago == 1){
+                    const imagen = document.createElement("img");
+                    imagen.id = "img-gasto";
+                    imagen.src = "check.png";
+                    gasto.appendChild(imagen);
                 }
                 divGastos.appendChild(gasto);
             });
