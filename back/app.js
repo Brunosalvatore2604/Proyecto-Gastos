@@ -256,7 +256,7 @@ app.post("/nuevo-gasto", (req, res) => {
                             if(err){
                                 return res.status(200).json({mensaje: "gasto agregado correctamente pero comprador no"});
                             }else{
-                                res.status(200).json({ mensaje: "Gasto agregado correctamente y comprador tambien" });
+                                return res.status(200).json({ mensaje: "Gasto agregado correctamente y comprador tambien" });
                             }
                         })
                         
@@ -316,6 +316,7 @@ app.post("/pago-gasto",(req,res)=>{
                     if(err){
                         return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago 1"});
                     }
+                    console.log("id pagos: ",result);
                     const checkPago2 = `SELECT esta_pago FROM Pago WHERE id = ?`;
                     result.forEach(pagos=>{
                         db.query(checkPago2,[pagos.id],(err,result)=>{
