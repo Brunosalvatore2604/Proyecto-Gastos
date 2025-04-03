@@ -6,6 +6,7 @@ const path = require("path");
 const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
+const { rejects } = require("assert");
 
 app.use(cors());
 app.use(express.json());
@@ -312,35 +313,44 @@ app.post("/pago-gasto",(req,res)=>{
             }else{
                 //Update hecho, verificando si ya pagaron todo
                 const checkPago = `SELECT id FROM Pago WHERE id_gasto = ?`;
-                db.query(checkPago,[idGasto],async(err,result)=>{
+                db.query(checkPago,[idGasto],(err,result)=>{
                     if(err){
                         return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago 1"});
                     }
                     console.log("id pagos: ",result);
                     
                     const checkPago2 = `SELECT esta_pago FROM Pago WHERE id = ?`;
-                    await result.forEach(pagos=>{
-                        db.query(checkPago2,[pagos.id],(err,result)=>{
-                            if(err){
-                                return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago 2"});
-                            }
-                            console.log("resultado:",result[0],"resultado:",result,"resultadoID:",result.esta_pago,"resultadoid2:",result[0].esta_pago);
-                            if(result[0].esta_pago == 0){
-                                estaPago = 0;
-                            }
+                    const promesas = result.map(pagos=>{
+                        return new Promise((resolve,reject)=>{
+                            db.query(checkPago2,[pagos.id],(err,result)=>{
+                                if(err){
+                                    reject(`ERROR en el pago `);
+                                }else if(result[0].esta_pago==0){
+                                    estaPago = 0;
+                                    resolve();
+                                }else{
+                                    resolve();
+                                }
+                            });
                         });
                     });
-                    if(estaPago==1){
-                        const updatePago = `UPDATE Gastos SET pago = TRUE WHERE id = ?`;
-                        db.query(updatePago,[idGasto],(err,result)=>{
-                            if(err){
-                                return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago"});
-                            }
-                            res.status(201).json({mensaje:"Gasto pago y gasto pagado"});
-                        });
-                    }else{
-                        res.status(201).json({mensaje:"Gasto pago y gasto no pagado"});
-                    }
+                    Promise.all(promesas)
+                    .then(()=>{
+                        if(estaPago==1){
+                            const updatePago = `UPDATE Gastos SET pago = TRUE WHERE id = ?`;
+                            db.query(updatePago,[idGasto],(err,result)=>{
+                                if(err){
+                                    return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago"});
+                                }
+                                res.status(201).json({mensaje:"Gasto pago y gasto pagado"});
+                            });
+                        }else{
+                            res.status(201).json({mensaje:"Gasto pago y gasto no pagado"});
+                        }
+                    }).catch((err)=>{
+                        console.log(err);
+                        return res.status(500).json({mensaje:"Error pamba"});
+                    })                    
                 });
             }
 
