@@ -6,27 +6,11 @@ const path = require("path");
 const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
-const { rejects } = require("assert");
+
 
 app.use(cors());
 app.use(express.json());
 
-//verificar token
-const verificarToken = (req,res,next)=>{
-    const token = req.headers["authorization"]?.split(" ")[1];
-
-    if(!token) {return res.status(401).json({mensaje:`Token invalido 1`});}
-
-    jwt.verify(token,"124911",(err,decoded)=>{
-        if(err) return res.status(401).json({mensaje:"Token invalido 2"});
-        req.usuario = decoded;
-        next();
-    });
-}
-
-app.get("/main",verificarToken,(req,res)=>{
-    res.status(200).json({mensaje:req.usuario.nombre,id:req.usuario.id});
-});
 
 // 📌 Configuración de la base de datos usando variables de entorno de Railway
 const db = mysql.createConnection({
@@ -57,8 +41,25 @@ db.connect(async err => {
 
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
-    });
+});
 
+//-------Verificar Token-----------
+const verificarToken = (req,res,next)=>{
+    const token = req.headers["authorization"]?.split(" ")[1];
+
+    if(!token) {return res.status(401).json({mensaje:`Token invalido 1`});}
+
+    jwt.verify(token,"124911",(err,decoded)=>{
+        if(err) return res.status(401).json({mensaje:"Token invalido 2"});
+        req.usuario = decoded;
+        next();
+    });
+}
+
+// 📌 Ruta para getear main con middlewere de chequeo de identidad
+app.get("/main",verificarToken,(req,res)=>{
+    res.status(200).json({mensaje:req.usuario.nombre,id:req.usuario.id});
+});
 
 // 📌 Ruta para login
 app.post("/login", (req, res) => {
@@ -77,10 +78,6 @@ app.post("/login", (req, res) => {
         const token = jwt.sign({nombre,id},"124911",{expiresIn:"1h"});
         return res.status(200).json({token});
     });
-});
-
-app.get("/main",verificarToken,(req,res)=>{
-    res.status(200).json({mensaje:req.usuario.nombre,id:req.usuario.id});
 });
 
 // 📌 Ruta para register

@@ -3,7 +3,7 @@
 
 document.addEventListener("DOMContentLoaded", async()=> {
     
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if(!token) {
         window.location.href = "/index.html";
         return;
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", async()=> {
     const expired = (payload.exp*1000) < Date.now();
     if(expired){
         window.location.href = "/index.html";
-        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         return;
     }
 
@@ -117,7 +117,7 @@ document.addEventListener("click", async (e)=>{
 
     const formulario = e.target.closest("form");
     const nombreGrupo = formulario.querySelector("#nombre-grupo").value;
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     if(!token){
         console.error("No hay token redirigiendo...");
@@ -131,7 +131,7 @@ document.addEventListener("click", async (e)=>{
         const isExpired = (payLoad.exp *1000) < Date.now();
         if(isExpired){
             console.error("Token expirado");
-            localStorage.removeItem("token");
+            sessionStorage.removeItem("token");
             window.location.href = "/index.html";
             return;
         }
@@ -378,7 +378,7 @@ document.addEventListener("click", async e => {
     
 
     const idGrupo = div.querySelector("#idGrupo").textContent.split(":")[1];
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     const payload64 = token.split(".")[1];
     const payload = JSON.parse(atob(payload64));
     const id = payload.id
@@ -470,7 +470,7 @@ document.addEventListener("click",async e=>{
         return;
     }
 
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if(!token){
         alert("Error no token");
         return;
@@ -481,7 +481,7 @@ document.addEventListener("click",async e=>{
     const isExpired = (payload.exp *1000) < Date.now();
         if(isExpired){
             console.error("Token expirado");
-            localStorage.removeItem("token");
+            sessionStorage.removeItem("token");
             window.location.href = "/index.html";
             return;
         }
