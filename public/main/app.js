@@ -540,10 +540,10 @@ document.addEventListener("click",async(e)=>{
         if(respuesta.ok){
 
             const siPagaron = data.siPagaron.map(sipag=>{
-                Object.values(sipag.nombre_usuario)
+                sipag.nombre_usuario
             }).join(" / ");
             const noPagaron = data.noPagaron.map(nopag=>{
-                Object.values(nopag.nombre_usuario)
+                nopag.nombre_usuario
             }).join(" / ");
 
             alert(`Pago: ${siPagaron} No pago: ${noPagaron}`);
