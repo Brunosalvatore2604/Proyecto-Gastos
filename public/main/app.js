@@ -538,7 +538,15 @@ document.addEventListener("click",async(e)=>{
 
         const data = await respuesta.json();
         if(respuesta.ok){
-            alert(`Pago: ${data.siPagaron.nombre_usuario} No pago: ${data.noPagaron.nombre_usuario}`);
+
+            const siPagaron = data.siPagaron.map(sipag=>{
+                Object.values(sipag)
+            }).join(" / ");
+            const noPagaron = data.noPagaron.map(nopag=>{
+                Object.values(nopag)
+            }).join(" / ");
+            
+            alert(`Pago: ${siPagaron} No pago: ${noPagaron}`);
         }else{
             alert("Error Geteando quien pago");
         }
