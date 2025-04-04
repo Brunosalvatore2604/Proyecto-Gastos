@@ -346,7 +346,7 @@ app.post("/get-quien-pago",(req,res)=>{
     const queryPago = `SELECT u.nombre_usuario
                             FROM Pago p
                             JOIN Usuarios u ON p.id_usuario = u.id
-                            WHERE p.id = ? AND p.esta_pago = FALSE`;
+                            WHERE p.id = ? AND p.esta_pago = TRUE`;
     db.query(queryNoPago,[idGasto],(err,result1)=>{
         if(err){
             return res.status(500).json({mensaje:`Error geteando quien no pago: ${err}`});
@@ -355,7 +355,8 @@ app.post("/get-quien-pago",(req,res)=>{
                 if(err){
                     return res.status(500).json({mensaje:`Error geteando quien pago: ${err}`});
                 }else{
-                    return res.status(200).json({mensaje1:result1,mensaje2:result2});
+                    console.log("resultado 1: ",result1,"resultado 2: ",result2);
+                    return res.status(200).json({noPagaron:result1,siPagaron:result2});
                 }
             })
         }

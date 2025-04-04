@@ -538,7 +538,7 @@ document.addEventListener("click",async(e)=>{
 
         const data = await respuesta.json();
         if(respuesta.ok){
-            alert(`Pago: ${data.mensaje1} No pago: ${data.mensaje2}`);
+            alert(`Pago: ${data.siPagaron} No pago: ${data.noPagaron}`);
         }else{
             alert("Error Geteando quien pago");
         }
