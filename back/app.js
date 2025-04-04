@@ -25,7 +25,6 @@ const verificarToken = (req,res,next)=>{
 }
 
 app.get("/main",verificarToken,(req,res)=>{
-    console.log("llegamos al main xd");
     res.status(200).json({mensaje:req.usuario.nombre,id:req.usuario.id});
 });
 
@@ -47,20 +46,15 @@ db.connect(async err => {
         return;
     }
  
-    const tableName = 'Pago';
+    await db.query("SET FOREIGN_KEY_CHECKS = 0");
+    await db.query("TRUNCATE TABLE Usuarios");
+    await db.query("TRUNCATE TABLE Grupos");
+    await db.query("TRUNCATE TABLE Usuarios_Grupos");
+    await db.query("TRUNCATE TABLE Gastos");
+    await db.query("TRUNCATE TABLE Pago");
+    await db.query("SET FOREIGN_KEY_CHECKS = 1");
 
-    db.query(
-    `SELECT COUNT(*) AS count FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ?`,
-    ['gastos_app', tableName],
-    (err, results) => {
-        if (err) throw err;
-        if (results[0].count > 0) {
-        console.log(`La tabla "${tableName}" existe.`);
-        } else {
-        console.log(`La tabla "${tableName}" no existe.`);
-        }
-    }
-);
+
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
     });
@@ -69,7 +63,6 @@ db.connect(async err => {
 // 📌 Ruta para login
 app.post("/login", (req, res) => {
     const { nombre, contraseña } = req.body;
-    console.log("Login: Nombre: ", nombre, "Contraseña: ", contraseña);
 
     const checkQuery = "SELECT nombre_usuario, contrasena,id FROM Usuarios WHERE nombre_usuario=? AND contrasena=?";
     db.query(checkQuery, [nombre, contraseña], (err, results) => {
@@ -87,7 +80,6 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/main",verificarToken,(req,res)=>{
-    console.log("llegamos al main xd");
     res.status(200).json({mensaje:req.usuario.nombre,id:req.usuario.id});
 });
 
@@ -123,7 +115,6 @@ app.post("/register", (req, res) => {
 // 📌 Ruta para crear grupo
 app.post("/crearGrupo",(req,res)=>{
     const {nombreGrupo,idCreador} = req.body;
-    console.log("llego a la api");
     if (!nombreGrupo || !idCreador) {
         return res.status(400).json({ mensaje: "Faltan datos: nombreGrupo o idCreador" });
     }
@@ -182,7 +173,6 @@ app.get("/main-getGrupos",(req,res)=>{
 
 // 📌 Ruta para get grupos por usuario
 app.post("/agregarIntegrante",(req,res)=>{
-    console.log(req.body);
     const {idIntegrante,idGrupo} = req.body;
     const checkquerry = `SELECT * FROM Usuarios WHERE id = ?`;
     db.query(checkquerry,[idIntegrante],(err,results)=>{
@@ -191,7 +181,6 @@ app.post("/agregarIntegrante",(req,res)=>{
             return res.status(500).json({mensaje:`Error: ${err}`});
         }
         if(results.length==0){
-            console.log("Usuario no existente");
             return res.status(404).json({mensaje:`Error: Ese Usuario no existe`});
         }
         
@@ -300,7 +289,6 @@ app.post("/pago-gasto",(req,res)=>{
         if(err){
             return res.status(500).json({mensaje:`Error comprobando si esta pago: ${err}`});
         }
-        console.log("largo: ",result.length,"result: ",result,"result data: ",result[0]);
         if(result.length > 0 && result[0].esta_pago == 1){
             return res.status(400).json({mensaje:"Este Usuario ya pago"});
         }
@@ -317,13 +305,11 @@ app.post("/pago-gasto",(req,res)=>{
                     if(err){
                         return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago 1"});
                     }
-                    console.log("id pagos: ",result);
                     
                     const checkPago2 = `SELECT esta_pago FROM Pago WHERE id = ?`;
                     const promesas = result.map(pagos=>{
                         return new Promise((resolve,reject)=>{
                             db.query(checkPago2,[pagos.id],(err,result)=>{
-                                console.log("Esta pago: ",result[0].esta_pago);
                                 if(err){
                                     reject(`ERROR en el pago `);
                                 }else if(result[0].esta_pago==0){
@@ -337,7 +323,6 @@ app.post("/pago-gasto",(req,res)=>{
                     });
                     Promise.all(promesas)
                     .then(()=>{
-                        console.log(estaPago);
                         if(estaPago==1){
                             const updatePago = `UPDATE Gastos SET pago = TRUE WHERE id = ?`;
                             db.query(updatePago,[idGasto],(err,result)=>{
