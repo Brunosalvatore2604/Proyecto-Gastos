@@ -6,7 +6,7 @@ const path = require("path");
 const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
-const { ReadableStreamDefaultController } = require("stream/web");
+
 
 
 app.use(cors());
@@ -30,15 +30,6 @@ db.connect(async err => {
         console.error("Error al conectar:", err);
         return;
     }
- 
-    db.query("SET FOREIGN_KEY_CHECKS = 0");
-    db.query("TRUNCATE TABLE Usuarios");
-    db.query("TRUNCATE TABLE Grupos");
-    db.query("TRUNCATE TABLE Usuarios_Grupos");
-    db.query("TRUNCATE TABLE Gastos");
-    db.query("TRUNCATE TABLE Pago");
-    db.query("SET FOREIGN_KEY_CHECKS = 1");
-
 
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
