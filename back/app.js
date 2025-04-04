@@ -6,6 +6,7 @@ const path = require("path");
 const mysql = require("mysql2");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
+const { ReadableStreamDefaultController } = require("stream/web");
 
 
 app.use(cors());
@@ -342,6 +343,33 @@ app.post("/pago-gasto",(req,res)=>{
 
     });
         
+});
+
+// 📌 Ruta para getear quien pago
+app.post("/get-quien-pago",(req,res)=>{
+    const {idGasto} = req.body;
+    const queryNoPago = `SELECT u.nombre_usuario
+                            FROM Pago p
+                            JOIN Usuarios u ON p.id_usuario = u.id
+                            WHERE p.id = ? AND p.esta_pago = FALSE`;
+    const queryPago = `SELECT u.nombre_usuario
+                            FROM Pago p
+                            JOIN Usuarios u ON p.id_usuario = u.id
+                            WHERE p.id = ? AND p.esta_pago = FALSE`;
+    db.query(queryNoPago,[idGasto],(err,result1)=>{
+        if(err){
+            return res.status(500).json({mensaje:`Error geteando quien no pago: ${err}`});
+        }else{
+            db.query(queryPago,[idGasto],(err,result2)=>{
+                if(err){
+                    return res.status(500).json({mensaje:`Error geteando quien pago: ${err}`});
+                }else{
+                    return res.status(200).json({mensaje1:result1,mensaje2:result2});
+                }
+            })
+        }
+    });
+    
 });
 
 app.use(express.static(path.join(__dirname, "../public"))); 

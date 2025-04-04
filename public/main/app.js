@@ -437,6 +437,11 @@ document.addEventListener("click", async e => {
                 plata.textContent = `Plata:${gastos.plata}`;
                 gasto.appendChild(plata);
                 
+                const quienPago = document.createElement("button");
+                quienPago.textContent = `¿Quien Pago?`;
+                quienPago.id = "quien-pago";
+                gasto.appendChild(quienPago);
+
                 if(!(id==gastos.id_usuario)){
                     const textoPago = document.createElement("h3");
                     textoPago.textContent = `¿Pago?:`;
@@ -512,3 +517,32 @@ document.addEventListener("click",async e=>{
     }
 
 });
+
+document.addEventListener("click",async(e)=>{
+    const target = e.target;
+
+    if(!(target.id=="quien-pago")){
+        return;
+    }
+
+    const idGasto = target.closest("div").querySelector("#id-gasto").textContent.split(":")[1];
+    const values = {
+        idGasto
+    };
+    try{
+        const respuesta = await fetch("/get-quien-pago",{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body: JSON.stringify(values)
+        })
+
+        const data = await respuesta.json();
+        if(respuesta.ok){
+            alert("Pago: ",data.mensaje1,"No pago: ",data.mensaje2);
+        }else{
+            alert("Error Geteando quien pago");
+        }
+    }catch(err){
+        console.error("Error geteando quien pago catch: ",err);
+    }
+})
