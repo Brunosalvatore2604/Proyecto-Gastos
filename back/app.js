@@ -46,13 +46,13 @@ db.connect(async err => {
         return;
     }
  
-    await db.query("SET FOREIGN_KEY_CHECKS = 0");
-    await db.query("TRUNCATE TABLE Usuarios");
-    await db.query("TRUNCATE TABLE Grupos");
-    await db.query("TRUNCATE TABLE Usuarios_Grupos");
-    await db.query("TRUNCATE TABLE Gastos");
-    await db.query("TRUNCATE TABLE Pago");
-    await db.query("SET FOREIGN_KEY_CHECKS = 1");
+    db.query("SET FOREIGN_KEY_CHECKS = 0");
+    db.query("TRUNCATE TABLE Usuarios");
+    db.query("TRUNCATE TABLE Grupos");
+    db.query("TRUNCATE TABLE Usuarios_Grupos");
+    db.query("TRUNCATE TABLE Gastos");
+    db.query("TRUNCATE TABLE Pago");
+    db.query("SET FOREIGN_KEY_CHECKS = 1");
 
 
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
