@@ -252,8 +252,8 @@ app.post("/nuevo-gasto", (req, res) => {
 
                 // Ejecutar todas las inserciones y responder solo una vez
                 Promise.all(promises)
-                    .then(() => {
-                        db.query(`UPDATE Pago SET esta_pago = TRUE WHERE id_usuario = ? AND id = ?`,[idUsuario,idGasto],(err,results)=>{
+                    .then(() => { 
+                        db.query(`UPDATE Pago SET esta_pago = TRUE WHERE id_usuario = ? AND id_gasto = ?`,[idUsuario,idGasto],(err,results)=>{
                             if(err){
                                 return res.status(200).json({mensaje: "gasto agregado correctamente pero comprador no"});
                             }else{
