@@ -312,7 +312,7 @@ app.post("/pago-gasto",(req,res)=>{
                 return res.status(500).json({mensaje:`Error Pagando: ${err}`});
             }else{
                 //Update hecho, verificando si ya pagaron todo
-                const checkPago = `SELECT id FROM Pago WHERE id_gasto = ?`;
+                const checkPago = `SELECT id_usuario,esta_pago,id FROM Pago WHERE id_gasto = ?`;
                 db.query(checkPago,[idGasto],(err,result)=>{
                     if(err){
                         return res.status(201).json({mensaje:"Gasto pagado con exito, pero error en update de esta pago 1"});
