@@ -323,6 +323,7 @@ app.post("/pago-gasto",(req,res)=>{
                     const promesas = result.map(pagos=>{
                         return new Promise((resolve,reject)=>{
                             db.query(checkPago2,[pagos.id],(err,result)=>{
+                                console.log("Esta pago: ",result[0].esta_pago);
                                 if(err){
                                     reject(`ERROR en el pago `);
                                 }else if(result[0].esta_pago==0){

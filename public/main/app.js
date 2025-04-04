@@ -439,7 +439,7 @@ document.addEventListener("click", async e => {
                 
                 if(!(id==gastos.id_usuario)){
                     const textoPago = document.createElement("h3");
-                    comprador.textContent = `¿Pago?:`;
+                    textoPago.textContent = `¿Pago?:`;
                     gasto.appendChild(textoPago);
 
                     const pago = document.createElement("button");
