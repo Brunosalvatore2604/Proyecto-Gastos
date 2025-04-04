@@ -351,6 +351,7 @@ app.post("/get-quien-pago",(req,res)=>{
         if(err){
             return res.status(500).json({mensaje:`Error geteando quien no pago: ${err}`});
         }else{
+            console.log("resultado1: ",result1);
             db.query(queryPago,[idGasto],(err,result2)=>{
                 if(err){
                     return res.status(500).json({mensaje:`Error geteando quien pago: ${err}`});
