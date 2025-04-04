@@ -336,6 +336,7 @@ app.post("/pago-gasto",(req,res)=>{
                     });
                     Promise.all(promesas)
                     .then(()=>{
+                        console.log(estaPago);
                         if(estaPago==1){
                             const updatePago = `UPDATE Gastos SET pago = TRUE WHERE id = ?`;
                             db.query(updatePago,[idGasto],(err,result)=>{

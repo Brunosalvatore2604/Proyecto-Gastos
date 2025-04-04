@@ -155,10 +155,8 @@ main{
 }
 
 .gasto-ejemplo img{
-    position: absolute;
-    height: 150px;
-    width: 250px;
-    contain: content;
+    height: 10%;
+    width: 10%;
     pointer-events: none;
 }
 
