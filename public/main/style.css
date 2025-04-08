@@ -304,6 +304,7 @@ main{
         padding: 2px;
         border: 2px solid black;
         overflow-y: auto;
+        font-size:10px;
     }
     
     .gasto-ejemplo{
@@ -319,7 +320,7 @@ main{
         padding: 2px;
         border: 2px solid black;
         transition: 0.2s ease;
-        font-size: 5px;
+        font-size: 10px;
     }
     
     .gasto-ejemplo form{
@@ -357,7 +358,7 @@ main{
         padding: 2px;
         border: 2px solid black;
         overflow: auto;
-        font-size: 5px;
+        font-size: 10px;
     }
     
     .group-eje{
@@ -373,7 +374,7 @@ main{
         padding: 2px;
         border: 2px solid black;
         transition: 0.2s ease;
-        font-size: 5px;
+        font-size: 10px;
     }
     
     .group-eje:hover{
