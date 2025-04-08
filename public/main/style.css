@@ -296,14 +296,14 @@ main{
     
     .gastos{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: start;
         background-color: #EBE5C2;
         height: 400px;
         width: 250px;
         padding: 2px;
         border: 2px solid black;
-        overflow: auto;
+        overflow-y: auto;
     }
     
     .gasto-ejemplo{
@@ -312,8 +312,8 @@ main{
         justify-content: start;
         align-items: start;
         background-color: #B9B28A;
-        height: 80px;
-        width: 80px;
+        height: 80%;
+        width: 80%;
         font-size: small;
         margin: 2px;
         padding: 2px;
@@ -333,8 +333,6 @@ main{
     }
     
     .gasto-ejemplo form input{
-        height: 5px;
-        width: 5px;
     }
     
     .gasto-ejemplo:hover{
@@ -368,8 +366,8 @@ main{
         justify-content: start;
         align-items: start;
         background-color: #B9B28A;
-        height: 80px;
-        width: 80px;
+        height: 80%;
+        width: 80%;
         font-size: small;
         margin: 2px;
         padding: 2px;
@@ -383,8 +381,6 @@ main{
     }
 
     .group-eje button{
-        height: 5px;
-        width: 5px;
     }
     
   }
