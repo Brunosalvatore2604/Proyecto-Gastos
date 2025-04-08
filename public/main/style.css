@@ -374,6 +374,7 @@ main{
         padding: 2px;
         border: 2px solid black;
         transition: 0.2s ease;
+        font-size: 5px;
     }
     
     .group-eje:hover{
