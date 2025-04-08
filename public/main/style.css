@@ -349,7 +349,7 @@ main{
     
     .group-selector{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: start;
         background-color: #EBE5C2;
         width: 250px;
