@@ -300,6 +300,7 @@ main{
         justify-content: start;
         background-color: #EBE5C2;
         height: 400px;
+        width: 250px;
         padding: 2px;
         border: 2px solid black;
         overflow: auto;
@@ -318,6 +319,7 @@ main{
         padding: 2px;
         border: 2px solid black;
         transition: 0.2s ease;
+        font-size: 5px;
     }
     
     .gasto-ejemplo form{
@@ -328,7 +330,6 @@ main{
         overflow-y: auto;
         height: 60%;
         width: 80%;
-        font-size: 8px;
     }
     
     .gasto-ejemplo form input{
@@ -352,10 +353,12 @@ main{
         flex-direction: row;
         justify-content: start;
         background-color: #EBE5C2;
+        width: 250px;
         height: 400px;
         padding: 2px;
         border: 2px solid black;
         overflow: auto;
+        font-size: 5px;
     }
     
     .group-eje{
