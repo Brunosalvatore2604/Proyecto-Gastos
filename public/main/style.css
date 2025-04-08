@@ -188,4 +188,193 @@ main{
 .group-eje:hover{
     transform: scale(1.03);
 }
-
+/*  FONO     */
+@media screen and (max-width: 768px) {
+    *{
+        padding: 0;
+        margin: 0;
+    }
+    
+    body{
+        background-color: #B9B28A; /*#504B38 #B9B28A #EBE5C2 */
+        font-family: "Kanit", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        user-select: none;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100vh;
+    }
+    
+    
+    .top{
+        background-color: #504B38;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: 10%;
+    }
+    
+    .name{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        height: 80%;
+        font-size: 8px;
+    }
+    
+    .user{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+        text-align: start;
+        width: 50%;
+        height: 80%;
+        background-color: #EBE5C2;
+        padding: 2px;
+        margin-right: 2px;
+        border: solid 2px black;
+    }
+    
+    .user img{
+       
+    }
+    
+    .foot{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #504B38;
+        font-size: 10px;
+        width: 100%;
+        height: 10%;
+        border-top: 2px black solid;
+    }
+    
+    main{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 80%;
+    }
+    
+    .group-creation{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 300px;
+        width: 400px;
+        background-color: #EBE5C2;
+        padding: 5px;
+        border: solid black 2px;
+        margin-top: 20px;
+    }
+    
+    .group-creation form{
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .group-creation input{
+        border: black solid 1px;
+        margin: 4px;
+    }
+    
+    .group-creation button{
+        margin: 4px;
+    }
+    
+    .gastos{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        background-color: #EBE5C2;
+        height: 400px;
+        padding: 2px;
+        border: 2px solid black;
+        overflow: auto;
+    }
+    
+    .gasto-ejemplo{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        background-color: #B9B28A;
+        height: 80px;
+        width: 80px;
+        font-size: small;
+        margin: 2px;
+        padding: 2px;
+        border: 2px solid black;
+        transition: 0.2s ease;
+    }
+    
+    .gasto-ejemplo form{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+        overflow-y: auto;
+        height: 60%;
+        width: 80%;
+        font-size: 8px;
+    }
+    
+    .gasto-ejemplo form input{
+        height: 100%;
+    }
+    
+    .gasto-ejemplo:hover{
+        transform: scale(1.03);
+    }
+    
+    .gasto-ejemplo input{
+        
+    }
+    
+    .gasto-ejemplo img{
+        
+    }
+    
+    .group-selector{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        background-color: #EBE5C2;
+        height: 400px;
+        padding: 2px;
+        border: 2px solid black;
+        overflow: auto;
+    }
+    
+    .group-eje{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        background-color: #B9B28A;
+        height: 80px;
+        width: 80px;
+        font-size: small;
+        margin: 2px;
+        padding: 2px;
+        border: 2px solid black;
+        transition: 0.2s ease;
+    }
+    
+    .group-eje:hover{
+        transform: scale(1.03);
+    }
+    
+  }
