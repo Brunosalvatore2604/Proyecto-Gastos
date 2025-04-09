@@ -454,7 +454,7 @@ document.addEventListener("click", async e => {
 
                     const apagar = document.createElement("h3");
                     apagar.id= "pago-apagar";
-                    apagar.textContent = `Ustede debe pagar: ${(gastos.plata / gastos.cantidad_usuarios)}`
+                    apagar.textContent = `Ustede debe pagar: ${(gastos.plata / (gastos.cantidad_usuarios - 1))}`
                     gasto.appendChild(apagar);
                 }
                 if(gastos.pago == 1){
