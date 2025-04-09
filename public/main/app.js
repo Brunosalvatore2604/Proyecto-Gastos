@@ -550,11 +550,11 @@ document.addEventListener("click",async(e)=>{
             const noP = data.lenNo;
             let siPagaron = " ";
             for(let i = 0;i<siP;i++){
-                siPagaron = siPagaron + data.siPagaron[i];
+                siPagaron = siPagaron + data.siPagaron[i].nombre_usuario;
             }
             let noPagaron = " ";
             for(let i = 0;i<noP;i++){
-                noPagaron = noPagaron + data.noPagaron[i];
+                noPagaron = noPagaron + data.noPagaron[i].nombre_usuario;
             }
 
             alert(`Pago: ${siPagaron} No pago: ${noPagaron}`);
