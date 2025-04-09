@@ -549,11 +549,11 @@ document.addEventListener("click",async(e)=>{
             const siP = data.lenSi;
             const noP = data.lenNo;
             let siPagaron = " ";
-            for(let i = 0;i<lenSi;i++){
+            for(let i = 0;i<siP;i++){
                 siPagaron = siPagaron + data[i].nombre_usuario;
             }
             let noPagaron = " ";
-            for(let i = 0;i<lenNo;i++){
+            for(let i = 0;i<noP;i++){
                 noPagaron = noPagaron + data[i].nombre_usuario;
             }
 
