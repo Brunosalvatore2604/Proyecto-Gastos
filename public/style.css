@@ -94,3 +94,20 @@ main{
     border-top: solid black;
 }
 
+@media screen and (max-width: 768px) {
+    .welcome{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        background-color: #504B38;
+        height: 20%;
+        border-bottom: solid black;
+        font-size: 18px;
+    }
+
+    .welcome h1{
+        font-size: 22px;
+    }
+}
