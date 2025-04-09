@@ -31,23 +31,6 @@ db.connect(async err => {
         return;
     }
 
-    db.query(`ALTER TABLE Gastos ADD COLUMN fecha DATE;`,(err,result)=>{
-        if(err){
-            console.log("Error agregando columna fecha");
-        }else{
-            console.log("todo lujoso");
-        }
-    });
-
-    db.query(`UPDATE Gastos SET fecha = '1970-01-01'`,(err,result)=>{
-        if(err){
-            console.log("Error agregando dato fecha");
-        }else{
-            console.log("todo lujoso");
-        }
-    })
-
-
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
 });
@@ -205,7 +188,7 @@ app.post("/agregarIntegrante",(req,res)=>{
 // 📌 Ruta para nuevo gasto
 
 app.post("/nuevo-gasto", (req, res) => {
-    const { idGrupo, idUsuario, motivo, dinero, fecha } = req.body;
+    const { idGrupo, idUsuario, motivo, dinero} = req.body;
 
     const checkUsuario = `SELECT * FROM Usuarios_Grupos WHERE id_usuario = ? AND id_grupo = ?`;
     db.query(checkUsuario, [idUsuario, idGrupo], (err, result) => {

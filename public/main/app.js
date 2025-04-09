@@ -313,14 +313,12 @@ document.addEventListener("click",async e =>{
     const idUsuario = form.querySelector("#input-comprador").value;
     const motivo = form.querySelector("#input-motivo").value;
     const dinero = form.querySelector("#input-dinero").value;
-    const fecha = form.querySelector("#input-fecha").value;
 
     const values = {
         idGrupo,
         idUsuario,
         motivo,
-        dinero,
-        fecha
+        dinero
     }
 
     try{
