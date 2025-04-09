@@ -281,14 +281,6 @@ document.addEventListener("click",async e =>{
     inputDinero.id = "input-dinero";
     formGasto.appendChild(inputDinero);
 
-    const textFecha = document.createElement("h3");
-    textFecha.textContent = "Fechas:";
-    formGasto.appendChild(textFecha);
-
-    const inputFecha = document.createElement("input");
-    inputFecha.id = "input-fecha";
-    formGasto.appendChild(inputFecha);
-
     const submitGasto = document.createElement("button");
     submitGasto.type = "submit";
     submitGasto.textContent = "Nuevo Gasto";
@@ -438,7 +430,8 @@ document.addEventListener("click", async e => {
                 gasto.appendChild(plata);
 
                 const fecha = document.createElement("h3");
-                fecha.textContent = `Fecha:${gastos.fecha}`;
+                const soloFecha = gastos.fecha.split("T")[0]; 
+                fecha.textContent = `Fecha:${soloFecha}`;
                 fecha.id = "fecha-gasto";
                 gasto.appendChild(fecha);
                 
