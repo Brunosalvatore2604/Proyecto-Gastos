@@ -546,13 +546,16 @@ document.addEventListener("click",async(e)=>{
         const data = await respuesta.json();
         console.log("si pagaron: ",data.siPagaron,"no pagaron: ",data.noPagaron);
         if(respuesta.ok){
-
-            const siPagaron = data.siPagaron.map(sipag=>{
-                sipag.nombre_usuario
-            }).join(" / ");
-            const noPagaron = data.noPagaron.map(nopag=>{
-                nopag.nombre_usuario
-            }).join(" / ");
+            const siP = data.lenSi;
+            const noP = data.lenNo;
+            let siPagaron = " ";
+            for(let i = 0;i<lenSi;i++){
+                siPagaron = siPagaron + data[i].nombre_usuario;
+            }
+            let noPagaron = " ";
+            for(let i = 0;i<lenNo;i++){
+                noPagaron = noPagaron + data[i].nombre_usuario;
+            }
 
             alert(`Pago: ${siPagaron} No pago: ${noPagaron}`);
         }else{

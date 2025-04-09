@@ -356,7 +356,7 @@ app.post("/get-quien-pago",(req,res)=>{
                     return res.status(500).json({mensaje:`Error geteando quien pago: ${err}`});
                 }else{
                     console.log("resultado 1: ",result1,"resultado 2: ",result2);
-                    return res.status(200).json({noPagaron:result1,siPagaron:result2});
+                    return res.status(200).json({noPagaron:result1,siPagaron:result2,lenNo:result1.length,lenSi:result2.length});
                 }
             })
         }
