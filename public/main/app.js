@@ -436,6 +436,11 @@ document.addEventListener("click", async e => {
                 plata.id = "plata-gasto"
                 plata.textContent = `Plata:${gastos.plata}`;
                 gasto.appendChild(plata);
+
+                const fecha = document.createElement("h3");
+                fecha.textContent = `Fecha:${gastos.fecha}`;
+                fecha.id = "fecha-gasto";
+                gasto.appendChild(fecha);
                 
                 const quienPago = document.createElement("button");
                 quienPago.textContent = `¿Quien Pago?`;

@@ -1,4 +1,4 @@
-//ARREGLAR EL TEMA DE QUE SI EL LOCO ES EL PAGADOR SE PONGA EN TRUE SU TABLA CON Pago
+//AGREGAR A LA TABLA GASTOS EL ATRIBUTO FECHA DE TIPO DATE E INSERTARLO POR LA FECHA QUE DA LA PC LUJITO
 
 const express = require("express"); //alt 96 ``
 const app = express();
@@ -30,6 +30,23 @@ db.connect(async err => {
         console.error("Error al conectar:", err);
         return;
     }
+
+    db.query(`ALTER TABLE Gastos ADD COLUMN fecha DATE;`,(err,result)=>{
+        if(err){
+            console.log("Error agregando columna fecha");
+        }else{
+            console.log("todo lujoso");
+        }
+    });
+
+    db.query(`UPDATE Gastos SET fecha = '1970-01-01'`,(err,result)=>{
+        if(err){
+            console.log("Error agregando dato fecha");
+        }else{
+            console.log("todo lujoso");
+        }
+    })
+
 
     console.log("✅ Conexión exitosa a la base de datos en Railway 🚀");
 
@@ -200,7 +217,7 @@ app.post("/nuevo-gasto", (req, res) => {
         }
 
         // Insertar el gasto solo si el usuario es válido
-        const insertQuerry = `INSERT INTO Gastos (id_grupo, id_usuario, motivo_gasto, plata) VALUES (?, ?, ?, ?)`;
+        const insertQuerry = `INSERT INTO Gastos (id_grupo, id_usuario, motivo_gasto, plata, fecha) VALUES (?, ?, ?, ?, CURDATE())`;
         db.query(insertQuerry, [idGrupo, idUsuario, motivo, dinero], (err, results) => {
             if (err) {
                 return res.status(500).json({ mensaje: `Error insertando gasto: ${err}` });
@@ -260,6 +277,7 @@ app.post("/get-gastos",(req,res)=>{
         g.motivo_gasto,
         g.plata,
         g.pago,
+        g.fecha,
         COUNT(p.id_usuario) AS cantidad_usuarios
     FROM 
         Gastos g
