@@ -407,6 +407,7 @@ document.addEventListener("click", async e => {
             }
             const divGastos = document.querySelector(".gastos");
             divGastos.innerHTML = "";
+            cant = data.cant;
             data.resultado.forEach(gastos=>{
                 
                 const gasto = document.createElement("div");
@@ -451,6 +452,12 @@ document.addEventListener("click", async e => {
                     pago.id = "pago-gasto"
                     pago.textContent= "Pague";
                     gasto.appendChild(pago);
+
+                    const apagar = document.createElement("h3");
+                    apagar.id= "pago-apagar";
+                    let apagarPorUsuario = (gastos.plata)/(cant-1);
+                    apagar.textContent = `Ustede debe pagar: ${apagarPorUsuario}`
+                    gasto.appendChild(apagar);
                 }
                 if(gastos.pago == 1){
                     const imagen = document.createElement("img");
@@ -537,6 +544,7 @@ document.addEventListener("click",async(e)=>{
         })
 
         const data = await respuesta.json();
+        console.log("si pagaron: ",data.siPagaron,"no pagaron: ",data.noPagaron);
         if(respuesta.ok){
 
             const siPagaron = data.siPagaron.map(sipag=>{

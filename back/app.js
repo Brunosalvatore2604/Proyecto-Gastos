@@ -261,7 +261,7 @@ app.post("/get-gastos",(req,res)=>{
         if(resultado.length==0){
             return res.status(404).json({mensaje:`No hay gastos para este grupo`});
         }
-        return res.status(200).json({resultado:resultado});
+        return res.status(200).json({resultado:resultado,cant:resultado.length});
        
     });
 });
