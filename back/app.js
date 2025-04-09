@@ -253,7 +253,22 @@ app.post("/nuevo-gasto", (req, res) => {
 
 app.post("/get-gastos",(req,res)=>{
     const {idGrupo,id} = req.body;
-    const querry = `SELECT id, id_grupo, id_usuario, motivo_gasto, plata, pago FROM Gastos WHERE id_grupo = ?`;
+    const querry =`SELECT 
+        g.id,
+        g.id_grupo,
+        g.id_usuario,
+        g.motivo_gasto,
+        g.plata,
+        g.pago,
+        COUNT(p.id_usuario) AS cantidad_usuarios
+    FROM 
+        Gastos g
+    JOIN 
+        Pago p ON g.id = p.id_gasto
+    WHERE 
+        g.id_grupo = ?
+    GROUP BY 
+        g.id, g.id_grupo, g.id_usuario, g.motivo_gasto, g.plata, g.pago;`
     db.query(querry,[idGrupo],(err,resultado)=>{
         if(err){
             return res.status(500).json({mensaje:`Error geteando gastos: ${err}`});
@@ -261,8 +276,7 @@ app.post("/get-gastos",(req,res)=>{
         if(resultado.length==0){
             return res.status(404).json({mensaje:`No hay gastos para este grupo`});
         }
-        return res.status(200).json({resultado:resultado,cant:resultado.length});
-       
+        return res.status(200).json({resultado:resultado});
     });
 });
 

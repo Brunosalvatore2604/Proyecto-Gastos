@@ -407,7 +407,6 @@ document.addEventListener("click", async e => {
             }
             const divGastos = document.querySelector(".gastos");
             divGastos.innerHTML = "";
-            cant = data.cant;
             data.resultado.forEach(gastos=>{
                 
                 const gasto = document.createElement("div");
@@ -455,8 +454,7 @@ document.addEventListener("click", async e => {
 
                     const apagar = document.createElement("h3");
                     apagar.id= "pago-apagar";
-                    let apagarPorUsuario = (gastos.plata)/(cant-1);
-                    apagar.textContent = `Ustede debe pagar: ${apagarPorUsuario}`
+                    apagar.textContent = `Ustede debe pagar: ${(gastos.plata / gastos.cantidad_usuarios)}`
                     gasto.appendChild(apagar);
                 }
                 if(gastos.pago == 1){
