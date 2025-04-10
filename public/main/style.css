@@ -187,6 +187,7 @@ main{
 .group-eje:hover{
     transform: scale(1.03);
 }
+
 /*  FONO     */
 @media screen and (max-width: 768px) {
     *{
